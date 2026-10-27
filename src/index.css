@@ -1,5 +1,7 @@
 @import "tailwindcss";
 
+@custom-variant dark (&:where(.dark, .dark *));
+
 @theme {
   --font-serif: 'Newsreader', 'Playfair Display', Georgia, Cambria, serif;
   --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
@@ -38,10 +40,10 @@
   --color-parchment-muted: #f0f3eb;
   --color-parchment-border: #e3e6de;
 
-  --color-obsidian-base: #06110d;
-  --color-obsidian-card: #0a1b14;
-  --color-obsidian-muted: #0f261d;
-  --color-obsidian-border: rgba(255, 255, 255, 0.08);
+  --color-obsidian-base: #0e1411;
+  --color-obsidian-card: #151d18;
+  --color-obsidian-muted: #1c2620;
+  --color-obsidian-border: rgba(255, 255, 255, 0.12);
 }
 
 @layer base {
@@ -59,12 +61,13 @@
   .dark {
     --feu-green-primary: #10b981;
     --feu-green-deep: #059669;
-    --feu-green-dark: #042419;
+    --feu-green-dark: #064e3b;
     --feu-green-light: #064e3b;
-    --feu-green-surface: #06110d;
+    --feu-green-surface: #0e1411;
     --feu-gold-primary: #f59e0b;
     --feu-gold-accent: #fbbf24;
     --feu-gold-light: #2d1a04;
+    color-scheme: dark;
   }
 
   body {

@@ -273,7 +273,7 @@ export const AssessmentModal: React.FC<AssessmentModalProps> = ({
               {initialData ? 'Edit Assessment Deliverable' : 'Record Academic Task'}
             </h2>
             <p className="text-[11px] text-stone-500 dark:text-emerald-400/70 truncate max-w-[280px] sm:max-w-none">
-              {subject ? `${subject.name} • Block 109/110` : 'Zero-based raw score computation according to FEU policies'}
+              {subject ? `${subject.name}${subject.section && !subject.section.includes('109') && !subject.section.includes('Block') ? ` • Sec ${subject.section}` : ''}` : 'Zero-based raw score computation according to FEU policies'}
             </p>
           </div>
 

@@ -58,7 +58,7 @@ export const GradeCalculator: React.FC = () => {
             <span className="font-mono font-bold text-base text-[#0d3824] dark:text-emerald-400">
               {currentSubject.code}
             </span>
-            {currentSubject.section && (
+            {currentSubject.section && !currentSubject.section.includes('109') && !currentSubject.section.includes('Block') && (
               <span className="font-mono text-xs px-2 py-0.5 rounded-md bg-[#eaf5ed] dark:bg-emerald-950 text-[#0d3824] dark:text-emerald-300 font-bold border border-[#cbe4d2] dark:border-emerald-800/40">
                 Sec {currentSubject.section}
               </span>

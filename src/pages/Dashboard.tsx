@@ -122,15 +122,15 @@ export const Dashboard: React.FC<DashboardProps> = ({ onOpenAddSubject }) => {
       {/* 1. Subheader: Category, Title & Academic Meta */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <span className="text-[10px] sm:text-[11px] font-mono font-bold tracking-widest uppercase text-stone-400 dark:text-emerald-500/80">
+          <span className="text-[10px] sm:text-[11px] font-mono font-bold tracking-widest uppercase text-stone-400 dark:text-stone-400">
             ACCOUNTANCY PORTFOLIO
           </span>
-          <h1 className="text-3xl sm:text-4xl font-serif font-bold text-stone-900 dark:text-emerald-50 tracking-tight mt-0.5">
+          <h1 className="text-3xl sm:text-4xl font-serif font-bold text-stone-900 dark:text-stone-100 tracking-tight mt-0.5">
             Academic Status
           </h1>
           <div className="flex items-center gap-2 mt-1.5 flex-wrap">
-            <span className="text-xs font-medium text-stone-600 dark:text-emerald-300/80">
-              SY {getAcademicYearForYear(activeTerm.year)} • {activeTerm.termName} {activeTermId === 'y1_s1' ? '• Block 109/110 ' : ''}• {totalUnits.toFixed(1)} Total Units
+            <span className="text-xs font-medium text-stone-600 dark:text-stone-300">
+              SY {getAcademicYearForYear(activeTerm.year)} • {activeTerm.termName} • {totalUnits.toFixed(1)} Total Units
             </span>
             <span className="text-stone-300 dark:text-emerald-900">•</span>
             <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-[#e8f5ec] dark:bg-[#0a2217] border border-[#cbe4d2] dark:border-emerald-800/40 text-[10px] font-mono font-bold text-[#0d3824] dark:text-emerald-300">
@@ -153,12 +153,12 @@ export const Dashboard: React.FC<DashboardProps> = ({ onOpenAddSubject }) => {
       </div>
 
       {/* 2. Cumulative Standing Card */}
-      <div className="p-5 sm:p-6 rounded-2xl bg-white dark:bg-[#0b1f16] border border-[#e2e6de] dark:border-emerald-950/60 shadow-2xs">
+      <div className="p-5 sm:p-6 rounded-2xl bg-white dark:bg-[#151c18] border border-[#e2e6de] dark:border-stone-800 shadow-2xs">
         <div className="flex items-center justify-between">
-          <span className="text-[10px] sm:text-[11px] font-mono font-bold tracking-wider uppercase text-stone-400 dark:text-emerald-400/60">
+          <span className="text-[10px] sm:text-[11px] font-mono font-bold tracking-wider uppercase text-stone-400 dark:text-stone-400">
             CUMULATIVE TERM STANDING (SY {getAcademicYearForYear(activeTerm.year)} {activeTerm.semester.toUpperCase()})
           </span>
-          <span className="text-[11px] font-medium text-stone-400 dark:text-emerald-500/70">
+          <span className="text-[11px] font-medium text-stone-400 dark:text-stone-400">
             BSA Retention Standard: &ge; 2.50 (C+)
           </span>
         </div>
@@ -168,7 +168,7 @@ export const Dashboard: React.FC<DashboardProps> = ({ onOpenAddSubject }) => {
             <span className="text-4xl sm:text-5xl font-serif font-bold text-stone-900 dark:text-white tracking-tight">
               {cumulativeQpa}
             </span>
-            <span className="text-xl sm:text-2xl font-serif text-stone-800 dark:text-emerald-100">
+            <span className="text-xl sm:text-2xl font-serif text-stone-800 dark:text-stone-200">
               QPA
             </span>
             {cumulativeLetter !== '--' && (
@@ -177,17 +177,17 @@ export const Dashboard: React.FC<DashboardProps> = ({ onOpenAddSubject }) => {
               </span>
             )}
             {cumulativeQpa === '--' && (
-              <span className="ml-1 inline-flex items-center px-2.5 py-0.5 rounded-md bg-stone-100 dark:bg-emerald-950/40 text-[11px] font-mono text-stone-600 dark:text-emerald-400">
+              <span className="ml-1 inline-flex items-center px-2.5 py-0.5 rounded-md bg-stone-100 dark:bg-[#1f2823] text-[11px] font-mono text-stone-600 dark:text-stone-300 border border-stone-200 dark:border-stone-700/60">
                 Clean Slate • Ready for Scores
               </span>
             )}
           </div>
 
           <div className="text-right">
-            <span className="text-lg sm:text-xl font-mono font-bold text-stone-700 dark:text-emerald-200">
+            <span className="text-lg sm:text-xl font-mono font-bold text-stone-700 dark:text-stone-100">
               2.50
             </span>
-            <span className="ml-1 text-xs text-stone-400 dark:text-emerald-400/60">Cutoff Limit</span>
+            <span className="ml-1 text-xs text-stone-400 dark:text-stone-400">Cutoff Limit</span>
           </div>
         </div>
       </div>
@@ -195,42 +195,42 @@ export const Dashboard: React.FC<DashboardProps> = ({ onOpenAddSubject }) => {
       {/* 3. Three Mini Metric Cards */}
       <div className="grid grid-cols-2 sm:grid-cols-3 gap-2.5 sm:gap-3">
         {/* Enrolled Courses */}
-        <div className="col-span-2 sm:col-span-1 p-3.5 sm:p-4 rounded-xl bg-white dark:bg-[#0b1f16] border border-[#e2e6de] dark:border-emerald-950/60 shadow-2xs space-y-1">
-          <div className="flex items-center justify-between text-[10px] font-mono font-bold uppercase tracking-wider text-stone-400 dark:text-emerald-400/60">
+        <div className="col-span-2 sm:col-span-1 p-3.5 sm:p-4 rounded-xl bg-white dark:bg-[#151c18] border border-[#e2e6de] dark:border-stone-800 shadow-2xs space-y-1">
+          <div className="flex items-center justify-between text-[10px] font-mono font-bold uppercase tracking-wider text-stone-400 dark:text-stone-400">
             <span>ENROLLED SUBJECTS</span>
             <span className="w-2 h-2 rounded-full bg-[#10b981]" />
           </div>
-          <div className="text-xl sm:text-2xl font-serif font-bold text-stone-900 dark:text-emerald-50">
+          <div className="text-xl sm:text-2xl font-serif font-bold text-stone-900 dark:text-stone-100">
             {subjects.length} Courses
           </div>
-          <div className="text-[11px] text-stone-500 dark:text-emerald-400/70">
+          <div className="text-[11px] text-stone-500 dark:text-stone-400">
             {totalUnits.toFixed(1)} Academic Units
           </div>
         </div>
 
         {/* Evaluated Progress */}
-        <div className="p-3.5 sm:p-4 rounded-xl bg-white dark:bg-[#0b1f16] border border-[#e2e6de] dark:border-emerald-950/60 shadow-2xs space-y-1">
-          <div className="flex items-center justify-between text-[10px] font-mono font-bold uppercase tracking-wider text-stone-400 dark:text-emerald-400/60">
+        <div className="p-3.5 sm:p-4 rounded-xl bg-white dark:bg-[#151c18] border border-[#e2e6de] dark:border-stone-800 shadow-2xs space-y-1">
+          <div className="flex items-center justify-between text-[10px] font-mono font-bold uppercase tracking-wider text-stone-400 dark:text-stone-400">
             <span>SYLLABUS PROGRESS</span>
-            <span className="px-1.5 py-0.2 rounded bg-stone-100 dark:bg-emerald-950 border border-stone-200 dark:border-emerald-800/40 text-[9px] font-mono font-bold text-stone-600 dark:text-emerald-300">
+            <span className="px-1.5 py-0.2 rounded bg-stone-100 dark:bg-emerald-950/80 border border-stone-200 dark:border-emerald-800/40 text-[9px] font-mono font-bold text-stone-600 dark:text-emerald-300">
               {gradedSubjectsCount} Graded
             </span>
           </div>
-          <div className="text-xl sm:text-2xl font-serif font-bold text-stone-900 dark:text-emerald-50">
+          <div className="text-xl sm:text-2xl font-serif font-bold text-stone-900 dark:text-stone-100">
             {totalCoverageSum}%
           </div>
-          <div className="text-[11px] text-stone-500 dark:text-emerald-400/70">
+          <div className="text-[11px] text-stone-500 dark:text-stone-400">
             Average Term Evaluation
           </div>
         </div>
 
         {/* Academic Standard */}
-        <div className="p-3.5 sm:p-4 rounded-xl bg-white dark:bg-[#0b1f16] border border-[#e2e6de] dark:border-emerald-950/60 shadow-2xs space-y-1">
-          <div className="flex items-center justify-between text-[10px] font-mono font-bold uppercase tracking-wider text-stone-400 dark:text-emerald-400/60">
+        <div className="p-3.5 sm:p-4 rounded-xl bg-white dark:bg-[#151c18] border border-[#e2e6de] dark:border-stone-800 shadow-2xs space-y-1">
+          <div className="flex items-center justify-between text-[10px] font-mono font-bold uppercase tracking-wider text-stone-400 dark:text-stone-400">
             <span>FEU IABF PROTOCOL</span>
-            <span className="w-2 h-2 rounded-full bg-[#0d3824]" />
+            <span className="w-2 h-2 rounded-full bg-[#10b981]" />
           </div>
-          <div className="text-xl sm:text-2xl font-serif font-bold text-stone-900 dark:text-emerald-50">
+          <div className="text-xl sm:text-2xl font-serif font-bold text-stone-900 dark:text-stone-100">
             Zero-Based
           </div>
           <div className="text-[11px] font-mono font-semibold text-[#0d3824] dark:text-emerald-400">
@@ -323,19 +323,19 @@ export const Dashboard: React.FC<DashboardProps> = ({ onOpenAddSubject }) => {
               <div
                 key={sub.id}
                 onClick={() => handleSelectSubject(sub.id)}
-                className="p-4 sm:p-5 rounded-2xl bg-white dark:bg-[#0b1f16] border border-[#e2e6de] dark:border-emerald-950/60 hover:border-[#0d3824]/40 transition-all shadow-2xs cursor-pointer group active-press"
+                className="p-4 sm:p-5 rounded-2xl bg-white dark:bg-[#151c18] border border-[#e2e6de] dark:border-stone-800 hover:border-[#0d3824]/40 dark:hover:border-stone-600 transition-all shadow-2xs cursor-pointer group active-press"
               >
                 {/* Header row: Code, category & Status pill */}
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2">
-                    <span className="font-mono font-bold text-xs text-stone-900 dark:text-emerald-100">
+                    <span className="font-mono font-bold text-xs text-stone-900 dark:text-stone-100">
                       {sub.code}
                     </span>
-                    <span className="px-1.5 py-0.5 rounded bg-stone-100 dark:bg-[#0a2217] border border-stone-200 dark:border-emerald-800/40 text-[10px] font-mono text-stone-600 dark:text-emerald-300 uppercase">
+                    <span className="px-1.5 py-0.5 rounded bg-stone-100 dark:bg-[#1c2721] border border-stone-200 dark:border-stone-700/60 text-[10px] font-mono text-stone-600 dark:text-stone-300 uppercase">
                       {isMajor ? `IABF MAJOR • ${sub.units}U` : `GENED • ${sub.units}U`}
                     </span>
-                    {sub.section && (
-                      <span className="text-[10px] font-mono text-stone-400">
+                    {sub.section && !sub.section.includes('109') && !sub.section.includes('Block') && (
+                      <span className="text-[10px] font-mono text-stone-400 dark:text-stone-400">
                         Sec {sub.section}
                       </span>
                     )}
@@ -358,7 +358,7 @@ export const Dashboard: React.FC<DashboardProps> = ({ onOpenAddSubject }) => {
                         Direct Grade • {sub.directLetterGrade}
                       </span>
                     ) : !hasData ? (
-                      <span className="px-2 py-0.5 rounded-md bg-stone-100 dark:bg-stone-900 border border-stone-200 dark:border-stone-800 text-[10px] font-mono font-medium text-stone-500">
+                      <span className="px-2 py-0.5 rounded-md bg-stone-100 dark:bg-[#1a231e] border border-stone-200 dark:border-stone-700/60 text-[10px] font-mono font-medium text-stone-500 dark:text-stone-400">
                         Clean Slate • 0% Graded
                       </span>
                     ) : isAttention ? (
@@ -379,75 +379,75 @@ export const Dashboard: React.FC<DashboardProps> = ({ onOpenAddSubject }) => {
                 </div>
 
                 {/* Course Name */}
-                <h3 className="text-base sm:text-lg font-serif font-bold text-stone-900 dark:text-emerald-50 mt-1.5 group-hover:text-[#0d3824] dark:group-hover:text-emerald-300 transition-colors">
+                <h3 className="text-base sm:text-lg font-serif font-bold text-stone-900 dark:text-stone-100 mt-1.5 group-hover:text-[#0d3824] dark:group-hover:text-emerald-300 transition-colors">
                   {sub.name}
                 </h3>
 
                 {/* 3-Column Metrics Container distinguishing Midterm vs Final Grade */}
-                <div className="mt-3 p-3 rounded-xl bg-[#f8faf7] dark:bg-[#071911] border border-[#e5ebe2] dark:border-emerald-950/80 grid grid-cols-3 text-center">
+                <div className="mt-3 p-3 rounded-xl bg-[#f8faf7] dark:bg-[#19221d] border border-[#e5ebe2] dark:border-stone-800/80 grid grid-cols-3 text-center">
                   <div>
-                    <span className="block text-[10px] font-mono text-stone-400 dark:text-emerald-400/60 uppercase font-bold">
+                    <span className="block text-[10px] font-mono text-stone-400 dark:text-stone-400 uppercase font-bold">
                       MIDTERM RUNNING
                     </span>
-                    <span className="block text-sm font-mono font-bold text-stone-800 dark:text-emerald-100 mt-0.5">
+                    <span className="block text-sm font-mono font-bold text-stone-800 dark:text-stone-100 mt-0.5">
                       {res?.midtermGrade?.letterGrade
                         ? `${res.midtermGrade.letterGrade} (${res.midtermGrade.transmutedGrade || '--'})`
                         : hasData
                         ? `${formatGrade(res.midtermGrade?.rawPercentage || 0, 1)}%`
                         : '--'}
                     </span>
-                    <span className="block text-[9px] font-mono text-stone-400 mt-0.5">
+                    <span className="block text-[9px] font-mono text-stone-400 dark:text-stone-400 mt-0.5">
                       {res?.midtermGrade?.isDirect ? 'Given Midterm' : 'Running Grade'}
                     </span>
                   </div>
                   <div>
-                    <span className="block text-[10px] font-mono text-stone-400 dark:text-emerald-400/60 uppercase font-bold">
+                    <span className="block text-[10px] font-mono text-stone-400 dark:text-stone-400 uppercase font-bold">
                       FINAL GRADE
                     </span>
                     <span
                       className={`block text-sm font-mono font-bold mt-0.5 ${
                         isAttention
                           ? 'text-amber-700 dark:text-amber-400'
-                          : 'text-[#0d3824] dark:text-emerald-300'
+                          : 'text-[#0d3824] dark:text-emerald-400 font-extrabold'
                       }`}
                     >
                       {res?.finalGrade?.letterGrade
                         ? `${res.finalGrade.letterGrade} (${res.finalGrade.transmutedGrade || '--'})`
                         : formattedTransmuted}
                     </span>
-                    <span className="block text-[9px] font-mono text-stone-400 mt-0.5">
+                    <span className="block text-[9px] font-mono text-stone-400 dark:text-stone-400 mt-0.5">
                       {res?.finalGrade?.isProjected ? 'Projected Course Pace' : 'Official Destination'}
                     </span>
                   </div>
                   <div>
-                    <span className="block text-[10px] font-mono text-stone-400 dark:text-emerald-400/60 uppercase font-bold">
+                    <span className="block text-[10px] font-mono text-stone-400 dark:text-stone-400 uppercase font-bold">
                       SYLLABUS
                     </span>
-                    <span className="block text-sm font-mono font-bold text-stone-800 dark:text-emerald-100 mt-0.5">
+                    <span className="block text-sm font-mono font-bold text-stone-800 dark:text-stone-100 mt-0.5">
                       {Math.round(res?.completedWeightCoverage || 0)}% Graded
                     </span>
-                    <span className="block text-[9px] font-mono text-stone-400 mt-0.5">
+                    <span className="block text-[9px] font-mono text-stone-400 dark:text-stone-400 mt-0.5">
                       {sub.units} Lecture Units
                     </span>
                   </div>
                 </div>
 
                 {/* Milestone Pipeline: Midterm Running -> Finals Destination */}
-                <div className="mt-2.5 px-3 py-1.5 rounded-lg bg-[#fafbfa] dark:bg-[#06180f] border border-[#e8ece5] dark:border-emerald-950/70 flex items-center justify-between text-[11px] font-mono">
+                <div className="mt-2.5 px-3 py-1.5 rounded-lg bg-[#fafbfa] dark:bg-[#141b17] border border-[#e8ece5] dark:border-stone-800/80 flex items-center justify-between text-[11px] font-mono">
                   <div className="flex items-center gap-1.5">
                     <Clock className="w-3.5 h-3.5 text-amber-600 dark:text-amber-400 shrink-0" />
-                    <span className="text-stone-500 dark:text-emerald-400/70">Midterm Running:</span>
-                    <span className="font-bold text-stone-800 dark:text-emerald-100">
+                    <span className="text-stone-500 dark:text-stone-400">Midterm Running:</span>
+                    <span className="font-bold text-stone-800 dark:text-stone-100">
                       {res?.midtermGrade?.letterGrade
                         ? `${res.midtermGrade.letterGrade} (${res.midtermGrade.rawPercentage.toFixed(1)}%)`
                         : 'In Progress'}
                     </span>
                   </div>
-                  <ArrowRight className="w-3.5 h-3.5 text-stone-300 dark:text-emerald-800 shrink-0" />
+                  <ArrowRight className="w-3.5 h-3.5 text-stone-300 dark:text-stone-600 shrink-0" />
                   <div className="flex items-center gap-1.5">
                     <GraduationCap className="w-3.5 h-3.5 text-[#0d3824] dark:text-emerald-400 shrink-0" />
-                    <span className="text-stone-500 dark:text-emerald-400/70">Final Destination:</span>
-                    <span className="font-bold text-[#0d3824] dark:text-emerald-300">
+                    <span className="text-stone-500 dark:text-stone-400">Final Destination:</span>
+                    <span className="font-bold text-[#0d3824] dark:text-emerald-400">
                       {res?.finalGrade?.letterGrade
                         ? `${res.finalGrade.letterGrade} (${res.finalGrade.rawPercentage.toFixed(1)}%)`
                         : 'Awaiting Finals'}

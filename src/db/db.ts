@@ -28,7 +28,7 @@ export const DEFAULT_PREFERENCES: UserPreferences = {
   defaultSemester: '1st Semester',
   activeTermId: 'y1_s1',
   gradeDisplayPrecision: 2,
-  theme: 'system',
+  theme: 'light',
   treatMissingAsZero: false,
   showQualityPoints: true,
   studentProgram: 'bs_accountancy',
@@ -39,7 +39,7 @@ export const FIRST_SEMESTER_SUBJECTS: Subject[] = [
   {
     id: 'sub_act1101',
     code: 'ACT1101',
-    section: 'Block 109/110',
+    section: '',
     name: 'FINANCIAL ACCOUNTING AND REPORTING',
     academicYear: '2026-2027',
     semester: '1st Semester',
@@ -83,14 +83,14 @@ export const FIRST_SEMESTER_SUBJECTS: Subject[] = [
         gradingPeriod: 'final'
       }
     ],
-    notes: 'Block 109/110 exclusive (SY 2026-2027 1st Semester). Mon 9:00-12:00 PM (Complab 204) & Thu 10:30-12:30 PM (Lec 705). 3.0 units. Must maintain >= 2.50 (C+) for BSA retention.',
+    notes: 'Mon 9:00-12:00 PM (Complab 204) & Thu 10:30-12:30 PM (Lec 705). 3.0 units. Must maintain >= 2.50 (C+) for BSA retention.',
     createdAt: new Date().toISOString(),
     updatedAt: new Date().toISOString()
   },
   {
     id: 'sub_law1101',
     code: 'LAW1101',
-    section: 'Block 109/110',
+    section: '',
     name: 'LAW ON OBLIGATIONS AND CONTRACTS',
     academicYear: '2026-2027',
     semester: '1st Semester',
@@ -133,14 +133,14 @@ export const FIRST_SEMESTER_SUBJECTS: Subject[] = [
         gradingPeriod: 'final'
       }
     ],
-    notes: 'Block 109/110 exclusive (SY 2026-2027 1st Semester). Civil Code: Obligations and Contracts. Room 707 Engineering Building.',
+    notes: 'Civil Code: Obligations and Contracts. Room 707 Engineering Building.',
     createdAt: new Date().toISOString(),
     updatedAt: new Date().toISOString()
   },
   {
     id: 'sub_mgt1115',
     code: 'MGT1115',
-    section: 'Block 109/110',
+    section: '',
     name: 'MANAGERIAL ECONOMICS',
     academicYear: '2026-2027',
     semester: '1st Semester',
@@ -183,14 +183,14 @@ export const FIRST_SEMESTER_SUBJECTS: Subject[] = [
         gradingPeriod: 'final'
       }
     ],
-    notes: 'Block 109/110 exclusive (SY 2026-2027 1st Semester). Room 707 Engineering Building. 50% FA / 50% SA.',
+    notes: 'Room 707 Engineering Building. 50% FA / 50% SA.',
     createdAt: new Date().toISOString(),
     updatedAt: new Date().toISOString()
   },
   {
     id: 'sub_mgt1101',
     code: 'MGT1101',
-    section: 'Block 109/110',
+    section: '',
     name: 'LEADERSHIP AND DECISION MAKING',
     academicYear: '2026-2027',
     semester: '1st Semester',
@@ -231,14 +231,14 @@ export const FIRST_SEMESTER_SUBJECTS: Subject[] = [
         gradingPeriod: 'final'
       }
     ],
-    notes: 'Block 109/110 exclusive (SY 2026-2027 1st Semester). Wed/Sat 4:30-6:00 PM Room 707 Engineering Building.',
+    notes: 'Wed/Sat 4:30-6:00 PM Room 707 Engineering Building.',
     createdAt: new Date().toISOString(),
     updatedAt: new Date().toISOString()
   },
   {
     id: 'sub_flj0101',
     code: 'FLJ0101',
-    section: 'Block 109/110',
+    section: '',
     name: 'FEU LEARNING JOURNEY 1',
     academicYear: '2026-2027',
     semester: '1st Semester',
@@ -270,14 +270,14 @@ export const FIRST_SEMESTER_SUBJECTS: Subject[] = [
         gradingPeriod: 'final'
       }
     ],
-    notes: 'Block 109/110 exclusive (SY 2026-2027 1st Semester). Tuesday 9:00-10:00 PM at FLJ & HMR-107. 0.0 units (Non-academic journey).',
+    notes: 'Tuesday 9:00-10:00 PM at FLJ & HMR-107. 0.0 units (Non-academic journey).',
     createdAt: new Date().toISOString(),
     updatedAt: new Date().toISOString()
   },
   {
     id: 'sub_ged0121',
     code: 'GED0121',
-    section: 'Block 109/110',
+    section: '',
     name: 'LANGUAGE ENHANCEMENT AND PROFICIENCY (LEAP)',
     academicYear: '2026-2027',
     semester: '1st Semester',
@@ -318,14 +318,14 @@ export const FIRST_SEMESTER_SUBJECTS: Subject[] = [
         gradingPeriod: 'final'
       }
     ],
-    notes: 'Block 109/110 exclusive (SY 2026-2027 1st Semester). Wed/Sat 7:30-9:00 AM at FEUture Center Room 205.',
+    notes: 'Wed/Sat 7:30-9:00 AM at FEUture Center Room 205.',
     createdAt: new Date().toISOString(),
     updatedAt: new Date().toISOString()
   },
   {
     id: 'sub_ged0113',
     code: 'GED0113',
-    section: 'Block 109/110',
+    section: '',
     name: 'THE FILIPINO IN THE CONTEMPORARY WORLD',
     academicYear: '2026-2027',
     semester: '1st Semester',
@@ -366,14 +366,14 @@ export const FIRST_SEMESTER_SUBJECTS: Subject[] = [
         gradingPeriod: 'final'
       }
     ],
-    notes: 'Block 109/110 exclusive (SY 2026-2027 1st Semester). Wed/Sat 9:00-10:30 AM at FEUture Center Room 509.',
+    notes: 'Wed/Sat 9:00-10:30 AM at FEUture Center Room 509.',
     createdAt: new Date().toISOString(),
     updatedAt: new Date().toISOString()
   },
   {
     id: 'sub_ged0106',
     code: 'GED0106',
-    section: 'Block 109/110',
+    section: '',
     name: 'ART APPRECIATION',
     academicYear: '2026-2027',
     semester: '1st Semester',
@@ -414,14 +414,14 @@ export const FIRST_SEMESTER_SUBJECTS: Subject[] = [
         gradingPeriod: 'final'
       }
     ],
-    notes: 'Block 109/110 exclusive (SY 2026-2027 1st Semester). Wed/Sat 12:00-1:30 PM at FEUture Center Room 208.',
+    notes: 'Wed/Sat 12:00-1:30 PM at FEUture Center Room 208.',
     createdAt: new Date().toISOString(),
     updatedAt: new Date().toISOString()
   },
   {
     id: 'sub_pft0101',
     code: 'PFT0101',
-    section: 'Block 109/110',
+    section: '',
     name: 'PHYSICAL ACTIVITIES TOWARDS HEALTH AND FITNESS 1',
     academicYear: '2026-2027',
     semester: '1st Semester',
@@ -462,14 +462,14 @@ export const FIRST_SEMESTER_SUBJECTS: Subject[] = [
         gradingPeriod: 'final'
       }
     ],
-    notes: 'Block 109/110 exclusive (SY 2026-2027 1st Semester). Wed/Sat 1:30-2:30 PM at Room 103 WRP MPR FEUture Center.',
+    notes: 'Wed/Sat 1:30-2:30 PM at Room 103 WRP MPR FEUture Center.',
     createdAt: new Date().toISOString(),
     updatedAt: new Date().toISOString()
   },
   {
     id: 'sub_nst0101',
     code: 'NST0101',
-    section: 'Block 109/110',
+    section: '',
     name: 'NATIONAL SERVICE TRAINING PROGRAM 1',
     academicYear: '2026-2027',
     semester: '1st Semester',
@@ -510,7 +510,7 @@ export const FIRST_SEMESTER_SUBJECTS: Subject[] = [
         gradingPeriod: 'final'
       }
     ],
-    notes: 'Block 109/110 exclusive (SY 2026-2027 1st Semester). Sunday 8:00 AM - 5:00 PM at NSTP/WRP-135.',
+    notes: 'Sunday 8:00 AM - 5:00 PM at NSTP/WRP-135.',
     createdAt: new Date().toISOString(),
     updatedAt: new Date().toISOString()
   }
@@ -549,6 +549,32 @@ export async function initializeDatabase(): Promise<void> {
     await db.subjects.bulkPut(ALL_CURRICULUM_SUBJECTS)
     await db.preferences.put({
       id: 'clean_slate_all_terms_v7',
+      defaultAcademicYear: '2026-2027',
+      defaultSemester: '1st Semester'
+    } as any)
+  }
+
+  // One-time cleanup for Block 109/110 and theme fix
+  const themeAndBlockCleanup = await db.preferences.get('theme_and_block_cleanup_v9')
+  if (!themeAndBlockCleanup) {
+    const allExistingSubjects = await db.subjects.toArray()
+    const subjectsToUpdate = allExistingSubjects.map(s => {
+      if (s.section && (s.section.includes('109') || s.section.includes('Block'))) {
+        return { ...s, section: '' }
+      }
+      return s
+    })
+    await db.subjects.bulkPut(subjectsToUpdate)
+
+    const savedLocalTheme = localStorage.getItem('tamsgrade_theme')
+    const finalTheme = savedLocalTheme === 'dark' ? 'dark' : 'light'
+    localStorage.setItem('tamsgrade_theme', finalTheme)
+    if (existingPrefs) {
+      await db.preferences.update('user_preferences', { theme: finalTheme })
+    }
+
+    await db.preferences.put({
+      id: 'theme_and_block_cleanup_v9',
       defaultAcademicYear: '2026-2027',
       defaultSemester: '1st Semester'
     } as any)

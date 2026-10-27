@@ -240,7 +240,7 @@ export const SubjectModal: React.FC<SubjectModalProps> = ({
                   type="text"
                   value={section}
                   onChange={(e) => setSection(e.target.value)}
-                  placeholder="e.g. Block 109"
+                  placeholder="e.g. Section 1"
                   className="w-full text-base sm:text-xs py-2.5 sm:py-2 px-3 rounded-xl bg-[#fafbfa] dark:bg-[#0a2016] border border-[#e2e6de] dark:border-emerald-900/50 text-stone-900 dark:text-emerald-50 font-mono focus:outline-hidden focus:ring-1 focus:ring-[#0d3824] shadow-2xs min-h-[44px] sm:min-h-0"
                 />
               </div>

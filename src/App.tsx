@@ -51,7 +51,7 @@ const MainContent: React.FC = () => {
   }
 
   return (
-    <div className="flex h-screen bg-[#f8f9f5] dark:bg-[#07140f] text-stone-900 dark:text-emerald-50 overflow-hidden font-sans">
+    <div className="flex h-screen bg-[#f8f9f5] dark:bg-[#0e1411] text-stone-900 dark:text-stone-100 overflow-hidden font-sans">
       {/* Navigation (Desktop Sidebar & Mobile Bottom Bar) */}
       <Navigation onOpenAddSubject={() => setIsAddSubjectModalOpen(true)} />
 

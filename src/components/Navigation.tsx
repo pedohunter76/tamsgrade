@@ -13,7 +13,9 @@ import {
   Menu,
   X,
   ChevronRight,
-  Plus
+  Plus,
+  Sun,
+  Moon
 } from 'lucide-react'
 import { useGrade, NavTab } from '../context/GradeContext'
 
@@ -39,7 +41,7 @@ const NAV_ITEMS: NavItem[] = [
 const PRIMARY_MOBILE_TABS: NavTab[] = ['dashboard', 'subjects', 'simulator', 'target']
 
 export const Navigation: React.FC<{ onOpenAddSubject: () => void }> = ({ onOpenAddSubject }) => {
-  const { activeTab, setActiveTab } = useGrade()
+  const { activeTab, setActiveTab, isDarkMode, toggleTheme } = useGrade()
   const [isMoreDrawerOpen, setIsMoreDrawerOpen] = useState(false)
 
   const isMoreActive = !PRIMARY_MOBILE_TABS.includes(activeTab)
@@ -47,22 +49,22 @@ export const Navigation: React.FC<{ onOpenAddSubject: () => void }> = ({ onOpenA
   return (
     <>
       {/* Desktop Left Sidebar */}
-      <aside className="hidden lg:flex flex-col w-64 bg-white dark:bg-[#071610] text-stone-900 dark:text-emerald-50 border-r border-[#e3e6de] dark:border-emerald-950/60 shrink-0 select-none relative z-30">
+      <aside className="hidden lg:flex flex-col w-64 bg-white dark:bg-[#131916] text-stone-900 dark:text-stone-100 border-r border-[#e3e6de] dark:border-stone-800/80 shrink-0 select-none relative z-30">
         {/* Brand Header */}
-        <div className="p-5 border-b border-[#e3e6de] dark:border-emerald-950/60">
+        <div className="p-5 border-b border-[#e3e6de] dark:border-stone-800/80">
           <div className="flex items-center gap-2">
-            <span className="font-serif font-bold tracking-tight text-xl text-stone-900 dark:text-emerald-50">
+            <span className="font-serif font-bold tracking-tight text-xl text-stone-900 dark:text-stone-100">
               TAMSGRADE
             </span>
           </div>
-          <p className="text-[11px] font-medium text-stone-500 dark:text-emerald-400/70 mt-1">
+          <p className="text-[11px] font-medium text-stone-500 dark:text-stone-400 mt-1">
             FEU IABF &bull; BS Accountancy
           </p>
         </div>
 
         {/* Institutional Modules List */}
         <div className="flex-1 px-3 py-4 space-y-1 overflow-y-auto">
-          <div className="px-3 pb-2 text-[10px] font-bold uppercase tracking-wider text-stone-400 dark:text-emerald-500/60">
+          <div className="px-3 pb-2 text-[10px] font-bold uppercase tracking-wider text-stone-400 dark:text-stone-400">
             INSTITUTIONAL MODULES
           </div>
 
@@ -76,15 +78,15 @@ export const Navigation: React.FC<{ onOpenAddSubject: () => void }> = ({ onOpenA
                   onClick={() => setActiveTab(item.id)}
                   className={`w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs font-semibold transition-all text-left group active-press ${
                     isActive
-                      ? 'bg-[#0f3d28] dark:bg-[#11422b] text-white shadow-xs'
-                      : 'text-stone-700 dark:text-stone-300 hover:bg-[#f4f7f2] dark:hover:bg-emerald-950/40 hover:text-stone-900 dark:hover:text-white'
+                      ? 'bg-[#0f3d28] dark:bg-[#154d33] text-white shadow-xs'
+                      : 'text-stone-700 dark:text-stone-300 hover:bg-[#f4f7f2] dark:hover:bg-[#1a241f] hover:text-stone-900 dark:hover:text-white'
                   }`}
                 >
                   <Icon
                     className={`w-4 h-4 shrink-0 transition-colors ${
                       isActive
                         ? 'text-white'
-                        : 'text-stone-500 dark:text-emerald-400/60 group-hover:text-stone-800 dark:group-hover:text-emerald-300'
+                        : 'text-stone-500 dark:text-stone-400 group-hover:text-stone-800 dark:group-hover:text-stone-100'
                     }`}
                   />
                   <span className="truncate">{item.label}</span>
@@ -151,22 +153,22 @@ export const Navigation: React.FC<{ onOpenAddSubject: () => void }> = ({ onOpenA
             onClick={() => setIsMoreDrawerOpen(false)}
           />
 
-          <div className="lg:hidden fixed bottom-0 left-0 right-0 z-50 bg-white dark:bg-[#0b1f16] rounded-t-3xl border-t border-[#e2e6de] dark:border-emerald-950/80 shadow-2xl p-5 pb-[max(1.5rem,env(safe-area-inset-bottom))] animate-in slide-in-from-bottom duration-250 max-h-[85vh] overflow-y-auto">
+          <div className="lg:hidden fixed bottom-0 left-0 right-0 z-50 bg-white dark:bg-[#141b17] rounded-t-3xl border-t border-[#e2e6de] dark:border-stone-800 shadow-2xl p-5 pb-[max(1.5rem,env(safe-area-inset-bottom))] animate-in slide-in-from-bottom duration-250 max-h-[85vh] overflow-y-auto">
             {/* Grabber handle */}
-            <div className="w-12 h-1.5 rounded-full bg-stone-300 dark:bg-emerald-900/80 mx-auto mb-4" />
+            <div className="w-12 h-1.5 rounded-full bg-stone-300 dark:bg-stone-700 mx-auto mb-4" />
 
-            <div className="flex items-center justify-between pb-3 border-b border-stone-100 dark:border-emerald-950/50">
+            <div className="flex items-center justify-between pb-3 border-b border-stone-100 dark:border-stone-800">
               <div>
-                <span className="font-serif font-bold text-lg text-stone-900 dark:text-emerald-50 block">
+                <span className="font-serif font-bold text-lg text-stone-900 dark:text-stone-100 block">
                   More Features
                 </span>
-                <span className="text-xs text-stone-500 dark:text-emerald-400/70 font-mono">
+                <span className="text-xs text-stone-500 dark:text-stone-400 font-mono">
                   FEU Manila IABF Modules
                 </span>
               </div>
               <button
                 onClick={() => setIsMoreDrawerOpen(false)}
-                className="w-9 h-9 rounded-full bg-stone-100 dark:bg-emerald-950/80 flex items-center justify-center text-stone-500 hover:text-stone-800 dark:hover:text-emerald-200 transition-colors"
+                className="w-9 h-9 rounded-full bg-stone-100 dark:bg-stone-800 flex items-center justify-center text-stone-500 hover:text-stone-800 dark:hover:text-stone-200 transition-colors"
                 aria-label="Close drawer"
               >
                 <X className="w-4 h-4" />
@@ -191,8 +193,8 @@ export const Navigation: React.FC<{ onOpenAddSubject: () => void }> = ({ onOpenA
                     }}
                     className={`w-full flex items-center justify-between p-3 rounded-xl transition-all text-left cursor-pointer active-press ${
                       isSelected
-                        ? 'bg-[#0f3d28] dark:bg-emerald-950 text-white shadow-xs'
-                        : 'bg-[#fafbfa] dark:bg-[#071911] border border-[#e8ece4] dark:border-emerald-950/60 text-stone-800 dark:text-emerald-100 hover:bg-stone-100'
+                        ? 'bg-[#0f3d28] dark:bg-[#154d33] text-white shadow-xs'
+                        : 'bg-[#fafbfa] dark:bg-[#18201d] border border-[#e8ece4] dark:border-stone-800 text-stone-800 dark:text-stone-200 hover:bg-stone-100 dark:hover:bg-[#202b25]'
                     }`}
                   >
                     <div className="flex items-center gap-3">
@@ -203,7 +205,7 @@ export const Navigation: React.FC<{ onOpenAddSubject: () => void }> = ({ onOpenA
                       </div>
                       <div>
                         <span className="block font-bold text-xs">{m.label}</span>
-                        <span className={`block text-[10px] mt-0.5 ${isSelected ? 'text-emerald-200' : 'text-stone-500 dark:text-emerald-400/60'}`}>
+                        <span className={`block text-[10px] mt-0.5 ${isSelected ? 'text-emerald-200' : 'text-stone-500 dark:text-stone-400'}`}>
                           {m.desc}
                         </span>
                       </div>
@@ -214,8 +216,29 @@ export const Navigation: React.FC<{ onOpenAddSubject: () => void }> = ({ onOpenA
               })}
             </div>
 
-            {/* Quick Enroll Subject Action */}
-            <div className="pt-2 border-t border-stone-100 dark:border-emerald-950/50">
+            {/* Theme Mode Toggle in Drawer */}
+            <div className="pt-2 border-t border-stone-100 dark:border-stone-800 space-y-2">
+              <button
+                onClick={() => toggleTheme()}
+                className="w-full flex items-center justify-between p-3 rounded-xl bg-[#fafbfa] dark:bg-[#18201d] border border-[#e8ece4] dark:border-stone-700/60 text-stone-800 dark:text-stone-100 hover:bg-stone-100 dark:hover:bg-[#223028] transition-all cursor-pointer active-press"
+              >
+                <div className="flex items-center gap-3">
+                  <div className="w-9 h-9 rounded-lg flex items-center justify-center shrink-0 bg-amber-50 dark:bg-amber-950/70 text-amber-600 dark:text-amber-400">
+                    {isDarkMode ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
+                  </div>
+                  <div>
+                    <span className="block font-bold text-xs">{isDarkMode ? 'Theme: Dark Mode' : 'Theme: Light Mode'}</span>
+                    <span className="block text-[10px] text-stone-500 dark:text-stone-400 mt-0.5">
+                      {isDarkMode ? 'Tap to switch to crisp Light UI' : 'Tap to switch to refined Dark Mode'}
+                    </span>
+                  </div>
+                </div>
+                <span className="text-xs font-mono font-bold px-2 py-1 rounded bg-stone-100 dark:bg-stone-800 text-stone-700 dark:text-stone-200 border border-stone-200 dark:border-stone-700">
+                  {isDarkMode ? 'Dark' : 'Light'}
+                </span>
+              </button>
+
+              {/* Quick Enroll Subject Action */}
               <button
                 onClick={() => {
                   setIsMoreDrawerOpen(false)

@@ -140,7 +140,7 @@ export const Curriculum: React.FC = () => {
               {ENROLLED_TERM_UNITS.toFixed(1)} <span className="text-xs font-sans font-medium text-stone-500">units</span>
             </div>
             <p className="text-[11px] text-stone-500 dark:text-emerald-400/70 mt-0.5">
-              10 subjects in Block 109/110
+              10 subjects enrolled in 1st Semester
             </p>
           </div>
 
@@ -316,9 +316,9 @@ export const Curriculum: React.FC = () => {
                         {term.termName}
                       </h2>
                       {isCurrentTerm && (
-                        <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-emerald-600 text-white text-[10px] font-bold font-mono uppercase tracking-wider shadow-2xs animate-pulse">
+                        <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-emerald-600 text-white text-[10px] font-bold font-mono uppercase tracking-wider shadow-2xs">
                           <CheckCircle2 className="w-3 h-3" />
-                          <span>ENROLLED (BLOCK 109/110)</span>
+                          <span>ENROLLED TERM</span>
                         </span>
                       )}
                     </div>

@@ -59,6 +59,8 @@ interface GradeContextType {
   updateTransmutationProfile: (id: string, updates: Partial<TransmutationProfile>) => Promise<void>
 
   // Preferences & System
+  isDarkMode: boolean
+  toggleTheme: () => Promise<void>
   updatePreferences: (updates: Partial<UserPreferences>) => Promise<void>
   resetAll: () => Promise<void>
   reloadSamples: () => Promise<void>
@@ -128,10 +130,28 @@ export const GradeProvider: React.FC<{ children: React.ReactNode }> = ({ childre
       setAssessments(asms)
       setTransmutationProfiles(profs)
       if (prefsRecord) {
-        setPreferences(prefsRecord)
+        const savedLocalTheme = localStorage.getItem('tamsgrade_theme')
+        const activeTheme: 'light' | 'dark' = savedLocalTheme === 'dark' ? 'dark' : (savedLocalTheme === 'light' ? 'light' : 'light')
+        localStorage.setItem('tamsgrade_theme', activeTheme)
+        if (activeTheme === 'dark') {
+          document.documentElement.classList.add('dark')
+        } else {
+          document.documentElement.classList.remove('dark')
+        }
+        setPreferences({ ...prefsRecord, theme: activeTheme })
         if (prefsRecord.activeTermId) {
           setActiveTermIdState(prefsRecord.activeTermId)
         }
+      } else {
+        const savedLocalTheme = localStorage.getItem('tamsgrade_theme')
+        const activeTheme: 'light' | 'dark' = savedLocalTheme === 'dark' ? 'dark' : 'light'
+        localStorage.setItem('tamsgrade_theme', activeTheme)
+        if (activeTheme === 'dark') {
+          document.documentElement.classList.add('dark')
+        } else {
+          document.documentElement.classList.remove('dark')
+        }
+        setPreferences(prev => ({ ...prev, theme: activeTheme }))
       }
 
       const initialTerm = prefsRecord?.activeTermId || 'y1_s1'
@@ -150,20 +170,34 @@ export const GradeProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     refreshData()
   }, [refreshData])
 
+  // Track dark mode directly
+  const isDarkMode = useMemo(() => {
+    return preferences.theme === 'dark'
+  }, [preferences.theme])
+
   // Sync theme with DOM
   useEffect(() => {
-    const isDark =
-      preferences.theme === 'dark' ||
-      (preferences.theme === 'system' &&
-        window.matchMedia &&
-        window.matchMedia('(prefers-color-scheme: dark)').matches)
-
-    if (isDark) {
+    if (preferences.theme === 'dark') {
       document.documentElement.classList.add('dark')
     } else {
       document.documentElement.classList.remove('dark')
     }
   }, [preferences.theme])
+
+  // Quick 1-tap theme toggle
+  const toggleTheme = useCallback(async () => {
+    const isCurrentlyDark = document.documentElement.classList.contains('dark') || preferences.theme === 'dark'
+    const nextTheme: 'light' | 'dark' = isCurrentlyDark ? 'light' : 'dark'
+    localStorage.setItem('tamsgrade_theme', nextTheme)
+    if (nextTheme === 'dark') {
+      document.documentElement.classList.add('dark')
+    } else {
+      document.documentElement.classList.remove('dark')
+    }
+    const newPrefs = { ...preferences, theme: nextTheme }
+    await db.preferences.put({ id: 'user_preferences', ...newPrefs })
+    setPreferences(newPrefs)
+  }, [preferences])
 
   // Compute grade results for all subjects across all terms
   const gradeResults = useMemo(() => {
@@ -308,6 +342,14 @@ export const GradeProvider: React.FC<{ children: React.ReactNode }> = ({ childre
 
   // Preferences & System
   const updatePreferences = async (updates: Partial<UserPreferences>): Promise<void> => {
+    if (updates.theme) {
+      localStorage.setItem('tamsgrade_theme', updates.theme)
+      if (updates.theme === 'dark') {
+        document.documentElement.classList.add('dark')
+      } else {
+        document.documentElement.classList.remove('dark')
+      }
+    }
     const newPrefs = { ...preferences, ...updates }
     await db.preferences.put({ id: 'user_preferences', ...newPrefs })
     setPreferences(newPrefs)
@@ -409,6 +451,8 @@ export const GradeProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     deleteAssessment,
     addTransmutationProfile,
     updateTransmutationProfile,
+    isDarkMode,
+    toggleTheme,
     updatePreferences,
     resetAll,
     reloadSamples,
