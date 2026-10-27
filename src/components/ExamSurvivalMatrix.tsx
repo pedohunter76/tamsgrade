@@ -150,7 +150,7 @@ export const ExamSurvivalMatrix: React.FC<ExamSurvivalMatrixProps> = ({
             <div
               key={tier.id}
               onClick={() => onSelectTarget(tier.targetRaw)}
-              className={`p-4 rounded-xl border ${tier.borderColor} bg-stone-50/60 dark:bg-stone-900/60 hover:bg-stone-100 dark:hover:bg-stone-850 cursor-pointer transition-all space-y-3 flex flex-col justify-between group`}
+              className={`p-4 rounded-xl border ${tier.borderColor} bg-stone-50/60 dark:bg-[#121c17] hover:bg-stone-100 dark:hover:bg-[#18261f] cursor-pointer transition-all space-y-3 flex flex-col justify-between group`}
             >
               <div>
                 <div className="flex items-center justify-between mb-1.5">

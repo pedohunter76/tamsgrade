@@ -707,13 +707,13 @@ export const Subjects: React.FC = () => {
                       className={`p-2 rounded-xl text-left transition-all ${
                         isSelected
                           ? 'bg-[#0d3824] text-white shadow-xs font-bold'
-                          : 'bg-[#fafbfa] dark:bg-[#081b12] border border-[#e2e6de] dark:border-emerald-900/40 text-stone-700 dark:text-emerald-200 hover:bg-stone-100'
+                          : 'bg-[#fafbfa] dark:bg-[#081b12] border border-[#e2e6de] dark:border-emerald-900/40 text-stone-700 dark:text-emerald-200 hover:bg-stone-100 dark:hover:bg-[#0f2d1e]'
                       }`}
                     >
                       <div className="flex items-center justify-between">
                         <span className="text-xs font-bold">{grade}</span>
                         <span className={`text-[10px] px-1 py-0.2 rounded font-bold ${
-                          isSelected ? 'bg-emerald-800 text-white' : 'bg-stone-200 text-stone-700'
+                          isSelected ? 'bg-emerald-800 text-white' : 'bg-stone-200 dark:bg-emerald-950/80 text-stone-700 dark:text-emerald-300'
                         }`}>
                           {meta.letter}
                         </span>
@@ -756,7 +756,7 @@ export const Subjects: React.FC = () => {
             {/* Quick action to simulator */}
             <button
               onClick={() => setActiveTab('simulator')}
-              className="w-full py-2 px-3 rounded-xl border border-[#e2e6de] dark:border-emerald-900/60 bg-[#fafbfa] dark:bg-[#081b12] hover:bg-stone-50 text-stone-800 dark:text-emerald-100 text-xs font-mono font-semibold transition-all shadow-2xs"
+              className="w-full py-2 px-3 rounded-xl border border-[#e2e6de] dark:border-emerald-900/60 bg-[#fafbfa] dark:bg-[#081b12] hover:bg-stone-50 dark:hover:bg-[#0e2c1e] text-stone-800 dark:text-emerald-100 text-xs font-mono font-semibold transition-all shadow-2xs"
             >
               Simulate in What-If Sandbox &rarr;
             </button>

@@ -44,6 +44,7 @@
   --color-obsidian-card: #151d18;
   --color-obsidian-muted: #1c2620;
   --color-obsidian-border: rgba(255, 255, 255, 0.12);
+  --color-stone-850: #17211b;
 }
 
 @layer base {

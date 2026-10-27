@@ -63,7 +63,7 @@ export const GradeCalculator: React.FC = () => {
                 Sec {currentSubject.section}
               </span>
             )}
-            <span className="text-[10px] font-mono font-bold px-2 py-0.5 rounded-full bg-stone-100 dark:bg-stone-850 text-stone-600 dark:text-stone-300 border border-stone-200 dark:border-stone-700 uppercase">
+            <span className="text-[10px] font-mono font-bold px-2 py-0.5 rounded-full bg-stone-100 dark:bg-[#15231c] text-stone-600 dark:text-emerald-300 border border-stone-200 dark:border-emerald-800/50 uppercase">
               {currentSubject.category === 'iabf_major' ? 'IABF Major' : currentSubject.category === 'gen_ed' ? 'Gen Ed' : 'Custom'}
             </span>
             <span className="text-xs text-stone-400 font-mono">
@@ -294,7 +294,7 @@ export const GradeCalculator: React.FC = () => {
 
         <div className="overflow-x-auto">
           <table className="w-full text-xs text-left">
-            <thead className="bg-stone-50 dark:bg-stone-850 text-stone-600 dark:text-stone-400 border-y border-stone-200 dark:border-stone-800 uppercase font-semibold">
+            <thead className="bg-stone-50 dark:bg-[#121c17] text-stone-600 dark:text-emerald-200/80 border-y border-stone-200 dark:border-emerald-950/70 uppercase font-semibold">
               <tr>
                 <th className="py-2.5 px-3">Type</th>
                 <th className="py-2.5 px-3">Assessment Category</th>
@@ -309,7 +309,7 @@ export const GradeCalculator: React.FC = () => {
               {result?.categories.map((c) => {
                 const isSA = c.isSummative
                 return (
-                  <tr key={c.categoryId} className="hover:bg-stone-50/50 dark:hover:bg-stone-850/50">
+                  <tr key={c.categoryId} className="hover:bg-stone-50/50 dark:hover:bg-[#15231c]/50">
                     <td className="py-3 px-3">
                       <span
                         className={`px-1.5 py-0.5 rounded text-[10px] font-mono font-bold ${
@@ -354,7 +354,7 @@ export const GradeCalculator: React.FC = () => {
                 )
               })}
             </tbody>
-            <tfoot className="border-t-2 border-stone-200 dark:border-stone-700 bg-stone-50/60 dark:bg-stone-850/60 font-bold">
+            <tfoot className="border-t-2 border-stone-200 dark:border-emerald-900/60 bg-stone-50/80 dark:bg-[#121c17] font-bold">
               <tr>
                 <td colSpan={2} className="py-3 px-3 text-stone-900 dark:text-stone-100">
                   Total Accounted Weights

@@ -140,19 +140,19 @@ export const GradingGuide: React.FC = () => {
                     ★ FEU IABF BS Accountancy Major Retention Cutoff (Minimum Passing for Professional Courses)
                   </td>
                 </tr>
-                <tr className="hover:bg-stone-50 dark:hover:bg-stone-850">
+                <tr className="hover:bg-stone-50 dark:hover:bg-[#15231c]/50">
                   <td className="py-2.5 px-4 font-black text-center text-sm text-stone-700 dark:text-stone-300">2.00</td>
                   <td className="py-2.5 px-4 font-bold text-center text-stone-800 dark:text-stone-200">64.00 – 70.99</td>
                   <td className="py-2.5 px-4 font-black text-center text-base text-stone-700 dark:text-stone-300">C</td>
                   <td className="py-2.5 px-4 font-sans text-stone-600 dark:text-stone-400 font-medium">Fair / Standard University Passing (Disqualification for BSA Major Courses)</td>
                 </tr>
-                <tr className="hover:bg-stone-50 dark:hover:bg-stone-850">
+                <tr className="hover:bg-stone-50 dark:hover:bg-[#15231c]/50">
                   <td className="py-2.5 px-4 font-black text-center text-sm text-stone-700 dark:text-stone-300">1.50</td>
                   <td className="py-2.5 px-4 font-bold text-center text-stone-800 dark:text-stone-200">57.00 – 63.99</td>
                   <td className="py-2.5 px-4 font-black text-center text-base text-stone-700 dark:text-stone-300">D+</td>
                   <td className="py-2.5 px-4 font-sans text-stone-600 dark:text-stone-400 font-medium">Low Passing (Below Promotion Threshold for Most Majors)</td>
                 </tr>
-                <tr className="hover:bg-stone-50 dark:hover:bg-stone-850">
+                <tr className="hover:bg-stone-50 dark:hover:bg-[#15231c]/50">
                   <td className="py-2.5 px-4 font-black text-center text-sm text-stone-700 dark:text-stone-300">1.00</td>
                   <td className="py-2.5 px-4 font-bold text-center text-stone-800 dark:text-stone-200">50.00 – 56.99</td>
                   <td className="py-2.5 px-4 font-black text-center text-base text-stone-700 dark:text-stone-300">D</td>
@@ -170,17 +170,17 @@ export const GradingGuide: React.FC = () => {
 
           {/* Official Special Marks & Policy Callout */}
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5 pt-1 text-xs">
-            <div className="p-3 rounded-xl bg-stone-50 dark:bg-stone-850 border border-stone-200 dark:border-stone-800">
+            <div className="p-3 rounded-xl bg-stone-50 dark:bg-[#121d18] border border-stone-200 dark:border-emerald-900/40">
               <span className="font-bold text-emerald-800 dark:text-emerald-400 font-mono text-sm">P = Passed</span>
-              <p className="text-[11px] text-stone-500 mt-0.5">Assigned for non-credit or zero-unit clearance courses</p>
+              <p className="text-[11px] text-stone-500 dark:text-stone-400 mt-0.5">Assigned for non-credit or zero-unit clearance courses</p>
             </div>
-            <div className="p-3 rounded-xl bg-stone-50 dark:bg-stone-850 border border-stone-200 dark:border-stone-800">
+            <div className="p-3 rounded-xl bg-stone-50 dark:bg-[#121d18] border border-stone-200 dark:border-emerald-900/40">
               <span className="font-bold text-amber-700 dark:text-amber-400 font-mono text-sm">AW = Authorized Withdrawal</span>
-              <p className="text-[11px] text-stone-500 mt-0.5">Officially dropped course within university clearance deadlines</p>
+              <p className="text-[11px] text-stone-500 dark:text-stone-400 mt-0.5">Officially dropped course within university clearance deadlines</p>
             </div>
-            <div className="p-3 rounded-xl bg-stone-50 dark:bg-stone-850 border border-stone-200 dark:border-stone-800">
+            <div className="p-3 rounded-xl bg-stone-50 dark:bg-[#121d18] border border-stone-200 dark:border-emerald-900/40">
               <span className="font-bold text-blue-700 dark:text-blue-400 font-mono text-sm">IP = In Progress</span>
-              <p className="text-[11px] text-stone-500 mt-0.5">For Apprenticeship, Practicum, and OJT courses</p>
+              <p className="text-[11px] text-stone-500 dark:text-stone-400 mt-0.5">For Apprenticeship, Practicum, and OJT courses</p>
             </div>
           </div>
         </section>
@@ -234,19 +234,19 @@ export const GradingGuide: React.FC = () => {
               </div>
 
               {/* Final Grade Card */}
-              <div className="p-4 rounded-xl bg-stone-50 dark:bg-stone-850 border border-stone-200 dark:border-stone-700 space-y-2">
+              <div className="p-4 rounded-xl bg-stone-50 dark:bg-[#121d18] border border-stone-200 dark:border-emerald-900/40 space-y-2">
                 <div className="flex items-center justify-between">
                   <span className="font-bold text-sm text-stone-900 dark:text-stone-100 font-mono">
                     Final Grade (Official Course Grade)
                   </span>
-                  <span className="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-stone-800 dark:bg-stone-200 text-white dark:text-stone-900">
+                  <span className="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-stone-800 dark:bg-stone-700 text-white dark:text-stone-100">
                     100% Course Total
                   </span>
                 </div>
                 <p className="text-[11px] text-stone-600 dark:text-stone-400 leading-relaxed font-sans">
                   The Final Grade is the <strong>permanent, official grade</strong> recorded on your University Transcript and evaluated against QPA retention standards (e.g. BSA 2.50 C+ retention).
                 </p>
-                <div className="p-2.5 rounded-lg bg-white dark:bg-[#071911] border border-stone-200 dark:border-stone-700 text-[11px] font-mono text-stone-800 dark:text-stone-200">
+                <div className="p-2.5 rounded-lg bg-white dark:bg-[#071911] border border-stone-200 dark:border-emerald-900/50 text-[11px] font-mono text-stone-800 dark:text-emerald-200">
                   ✓ Cumulative course culmination<br/>
                   ✓ Determines honors (President's / Dean's List)<br/>
                   ✓ Official basis for graduation &amp; promotion
@@ -321,7 +321,7 @@ export const GradingGuide: React.FC = () => {
                   <td className="py-2.5 px-4 text-center text-emerald-800 dark:text-emerald-300 font-bold">2.00</td>
                   <td className="py-2.5 px-4 text-center text-amber-700 dark:text-amber-300 font-extrabold text-sm">2.40</td>
                 </tr>
-                <tr className="hover:bg-stone-50 dark:hover:bg-stone-850">
+                <tr className="hover:bg-stone-50 dark:hover:bg-[#15231c]/50">
                   <td className="py-2.5 px-4 font-sans font-medium text-stone-800 dark:text-stone-200">
                     BS Architecture (IARFA)
                   </td>
@@ -330,7 +330,7 @@ export const GradingGuide: React.FC = () => {
                   <td className="py-2.5 px-4 text-center font-bold">2.00 <span className="text-[10px] font-sans text-stone-400 block">(until 5th yr)</span></td>
                   <td className="py-2.5 px-4 text-center font-bold text-stone-900 dark:text-stone-100">2.20</td>
                 </tr>
-                <tr className="hover:bg-stone-50 dark:hover:bg-stone-850">
+                <tr className="hover:bg-stone-50 dark:hover:bg-[#15231c]/50">
                   <td className="py-2.5 px-4 font-sans font-medium text-stone-800 dark:text-stone-200">
                     BS Elementary & Secondary Education (IE)
                   </td>
@@ -339,7 +339,7 @@ export const GradingGuide: React.FC = () => {
                   <td className="py-2.5 px-4 text-center font-bold">2.00</td>
                   <td className="py-2.5 px-4 text-center font-bold text-stone-900 dark:text-stone-100">2.20</td>
                 </tr>
-                <tr className="hover:bg-stone-50 dark:hover:bg-stone-850">
+                <tr className="hover:bg-stone-50 dark:hover:bg-[#15231c]/50">
                   <td className="py-2.5 px-4 font-sans font-medium text-stone-800 dark:text-stone-200">
                     BS MedTech, BS Nursing, & BS Psychology
                   </td>
@@ -348,8 +348,8 @@ export const GradingGuide: React.FC = () => {
                   <td className="py-2.5 px-4 text-center font-bold">2.20</td>
                   <td className="py-2.5 px-4 text-center font-extrabold text-sm text-stone-900 dark:text-stone-100">2.40</td>
                 </tr>
-                <tr className="bg-stone-50/80 dark:bg-stone-850/80 hover:bg-stone-100 font-semibold border-t-2 border-stone-300 dark:border-stone-700">
-                  <td className="py-2.5 px-4 font-sans font-bold text-stone-900 dark:text-stone-100">
+                <tr className="bg-stone-100/90 dark:bg-[#14231b] hover:bg-stone-200/80 dark:hover:bg-[#192c22] font-semibold border-t-2 border-stone-300 dark:border-emerald-800/80">
+                  <td className="py-2.5 px-4 font-sans font-bold text-stone-900 dark:text-emerald-100">
                     University Standard (All Other Courses)
                   </td>
                   <td className="py-2.5 px-4 text-center font-bold text-emerald-800 dark:text-emerald-300">1.20</td>
@@ -411,7 +411,7 @@ export const GradingGuide: React.FC = () => {
           </div>
 
           {/* Interactive Promotion QPA Tester Widget */}
-          <div className="p-4 rounded-xl bg-stone-50 dark:bg-stone-850 border border-stone-200 dark:border-stone-700 space-y-3 pt-4">
+          <div className="p-4 rounded-xl bg-stone-50 dark:bg-[#121d18] border border-stone-200 dark:border-emerald-900/40 space-y-3 pt-4">
             <div className="flex items-center gap-2">
               <Sliders className="w-4 h-4 text-emerald-700 dark:text-emerald-400" />
               <span className="text-xs font-bold text-stone-900 dark:text-stone-100">
@@ -431,7 +431,7 @@ export const GradingGuide: React.FC = () => {
                   max="4"
                   value={testQpa}
                   onChange={(e) => setTestQpa(parseFloat(e.target.value) || 0)}
-                  className="w-full font-mono font-bold py-1.5 px-3 rounded-lg bg-white dark:bg-stone-800 border text-stone-900 dark:text-stone-100"
+                  className="w-full font-mono font-bold py-1.5 px-3 rounded-lg bg-white dark:bg-[#071911] border border-stone-300 dark:border-emerald-900/60 text-stone-900 dark:text-emerald-100 focus:ring-1 focus:ring-emerald-600 focus:outline-hidden"
                 />
               </div>
 
@@ -442,7 +442,7 @@ export const GradingGuide: React.FC = () => {
                 <select
                   value={testProgram}
                   onChange={(e) => setTestProgram(e.target.value as FEUProgramId)}
-                  className="w-full text-xs py-1.5 px-2.5 rounded-lg bg-white dark:bg-stone-800 border text-stone-900 dark:text-stone-100 font-medium"
+                  className="w-full text-xs py-1.5 px-2.5 rounded-lg bg-white dark:bg-[#071911] border border-stone-300 dark:border-emerald-900/60 text-stone-900 dark:text-emerald-100 font-medium focus:ring-1 focus:ring-emerald-600 focus:outline-hidden"
                 >
                   {FEU_QPA_PROGRAM_RULES.map((prog) => (
                     <option key={prog.id} value={prog.id}>
@@ -459,7 +459,7 @@ export const GradingGuide: React.FC = () => {
                 <select
                   value={testTargetYear}
                   onChange={(e) => setTestTargetYear(e.target.value as FEUPromotionTarget)}
-                  className="w-full text-xs py-1.5 px-2.5 rounded-lg bg-white dark:bg-stone-800 border text-stone-900 dark:text-stone-100 font-medium"
+                  className="w-full text-xs py-1.5 px-2.5 rounded-lg bg-white dark:bg-[#071911] border border-stone-300 dark:border-emerald-900/60 text-stone-900 dark:text-emerald-100 font-medium focus:ring-1 focus:ring-emerald-600 focus:outline-hidden"
                 >
                   {Object.entries(PROMOTION_TARGET_LABELS).map(([k, label]) => (
                     <option key={k} value={k}>
@@ -508,7 +508,7 @@ export const GradingGuide: React.FC = () => {
           <p className="text-xs text-stone-600 dark:text-stone-300 leading-relaxed">
             In standard Philippine universities, some grading systems use a base of 50 or 60 (where getting 0 points gives a 50% or 60% baseline). At Far Eastern University (FEU), scoring operates strictly on an uncurved <strong>zero-based model</strong>:
           </p>
-          <div className="p-3.5 rounded-xl bg-stone-50 dark:bg-stone-850 border border-stone-200 dark:border-stone-800 text-xs font-mono text-stone-800 dark:text-stone-200">
+          <div className="p-3.5 rounded-xl bg-stone-50 dark:bg-[#121d18] border border-stone-200 dark:border-emerald-900/40 text-xs font-mono text-stone-800 dark:text-emerald-200">
             Assessment Percentage = (Points Earned ÷ Total Possible Points) × 100
           </div>
           <p className="text-xs text-stone-600 dark:text-stone-300 leading-relaxed">
@@ -531,13 +531,13 @@ export const GradingGuide: React.FC = () => {
           </p>
 
           {/* Interactive Calculator */}
-          <div className="p-4 rounded-xl bg-stone-50 dark:bg-stone-850 border border-stone-200 dark:border-stone-700 space-y-3">
+          <div className="p-4 rounded-xl bg-stone-50 dark:bg-[#121d18] border border-stone-200 dark:border-emerald-900/40 space-y-3">
             <span className="text-xs font-bold text-stone-900 dark:text-stone-100 block">
               Try It: Interactive Method Comparison Calculator
             </span>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
-              <div className="p-3 rounded-lg bg-white dark:bg-stone-900 border border-stone-200 dark:border-stone-700 space-y-1.5">
+              <div className="p-3 rounded-lg bg-white dark:bg-[#071911] border border-stone-200 dark:border-emerald-900/50 space-y-1.5">
                 <span className="font-semibold text-stone-800 dark:text-stone-200">
                   Assessment 1 (Short Quiz)
                 </span>
@@ -546,20 +546,20 @@ export const GradingGuide: React.FC = () => {
                     type="number"
                     value={demoEarned1}
                     onChange={(e) => setDemoEarned1(parseFloat(e.target.value) || 0)}
-                    className="w-16 font-mono font-bold text-right py-1 px-2 rounded bg-stone-50 dark:bg-stone-800 border"
+                    className="w-16 font-mono font-bold text-right py-1 px-2 rounded bg-stone-50 dark:bg-[#14231b] border border-stone-300 dark:border-emerald-900/60 text-stone-900 dark:text-emerald-100"
                   />
                   <span>/</span>
                   <input
                     type="number"
                     value={demoPossible1}
                     onChange={(e) => setDemoPossible1(parseFloat(e.target.value) || 1)}
-                    className="w-16 font-mono font-bold text-right py-1 px-2 rounded bg-stone-50 dark:bg-stone-800 border"
+                    className="w-16 font-mono font-bold text-right py-1 px-2 rounded bg-stone-50 dark:bg-[#14231b] border border-stone-300 dark:border-emerald-900/60 text-stone-900 dark:text-emerald-100"
                   />
-                  <span className="font-mono text-emerald-700">({pct1.toFixed(0)}%)</span>
+                  <span className="font-mono text-emerald-700 dark:text-emerald-400">({pct1.toFixed(0)}%)</span>
                 </div>
               </div>
 
-              <div className="p-3 rounded-lg bg-white dark:bg-stone-900 border border-stone-200 dark:border-stone-700 space-y-1.5">
+              <div className="p-3 rounded-lg bg-white dark:bg-[#071911] border border-stone-200 dark:border-emerald-900/50 space-y-1.5">
                 <span className="font-semibold text-stone-800 dark:text-stone-200">
                   Assessment 2 (Long Quiz)
                 </span>
@@ -568,16 +568,16 @@ export const GradingGuide: React.FC = () => {
                     type="number"
                     value={demoEarned2}
                     onChange={(e) => setDemoEarned2(parseFloat(e.target.value) || 0)}
-                    className="w-16 font-mono font-bold text-right py-1 px-2 rounded bg-stone-50 dark:bg-stone-800 border"
+                    className="w-16 font-mono font-bold text-right py-1 px-2 rounded bg-stone-50 dark:bg-[#14231b] border border-stone-300 dark:border-emerald-900/60 text-stone-900 dark:text-emerald-100"
                   />
                   <span>/</span>
                   <input
                     type="number"
                     value={demoPossible2}
                     onChange={(e) => setDemoPossible2(parseFloat(e.target.value) || 1)}
-                    className="w-16 font-mono font-bold text-right py-1 px-2 rounded bg-stone-50 dark:bg-stone-800 border"
+                    className="w-16 font-mono font-bold text-right py-1 px-2 rounded bg-stone-50 dark:bg-[#14231b] border border-stone-300 dark:border-emerald-900/60 text-stone-900 dark:text-emerald-100"
                   />
-                  <span className="font-mono text-emerald-700">({pct2.toFixed(0)}%)</span>
+                  <span className="font-mono text-emerald-700 dark:text-emerald-400">({pct2.toFixed(0)}%)</span>
                 </div>
               </div>
             </div>
@@ -657,7 +657,7 @@ export const GradingGuide: React.FC = () => {
             </div>
           </div>
 
-          <div className="p-3 rounded-xl bg-stone-50 dark:bg-stone-850 border border-stone-200 dark:border-stone-800 text-xs">
+          <div className="p-3 rounded-xl bg-stone-50 dark:bg-[#121d18] border border-stone-200 dark:border-emerald-900/40 text-xs">
             <span className="font-bold text-stone-900 dark:text-stone-100 block">
               {activeScale.name}
             </span>
@@ -666,9 +666,9 @@ export const GradingGuide: React.FC = () => {
             </p>
           </div>
 
-          <div className="overflow-x-auto rounded-xl border border-stone-200 dark:border-stone-800">
+          <div className="overflow-x-auto rounded-xl border border-stone-200 dark:border-emerald-900/60">
             <table className="w-full text-xs text-left">
-              <thead className="bg-stone-50 dark:bg-stone-850 text-stone-600 dark:text-stone-400 border-b border-stone-200 dark:border-stone-800 font-semibold uppercase">
+              <thead className="bg-stone-50 dark:bg-[#121c17] text-stone-600 dark:text-emerald-200/80 border-b border-stone-200 dark:border-emerald-900/60 font-semibold uppercase">
                 <tr>
                   <th className="py-2.5 px-3">Official Grade</th>
                   <th className="py-2.5 px-3">Raw Percentage Range</th>
@@ -684,7 +684,7 @@ export const GradingGuide: React.FC = () => {
                     ['2.75', '3.00', '4.00', '5.00', 'C', 'D+', 'D', 'F'].includes(r.officialGrade) &&
                     (r.qualityPoints !== undefined ? r.qualityPoints < 2.50 : true)
 
-                  let rowStyle = 'hover:bg-stone-50/50 dark:hover:bg-stone-850/50'
+                  let rowStyle = 'hover:bg-stone-50/50 dark:hover:bg-[#15231c]/50'
                   if (isRetentionCutoff) {
                     rowStyle = 'bg-amber-50/80 dark:bg-amber-950/40 font-semibold'
                   } else if (isBelowRetention && r.officialGrade === 'F') {
@@ -724,7 +724,7 @@ export const GradingGuide: React.FC = () => {
         </section>
 
         {/* Section 6: Official Source Verification Registry */}
-        <section className="p-6 rounded-2xl bg-stone-50 dark:bg-stone-850 border border-stone-200 dark:border-stone-800 space-y-4">
+        <section className="p-6 rounded-2xl bg-stone-50 dark:bg-[#0c1a14] border border-stone-200 dark:border-emerald-950/60 space-y-4">
           <div className="flex items-center gap-2">
             <FileCheck className="w-5 h-5 text-emerald-800 dark:text-emerald-400" />
             <h2 className="text-base font-bold text-stone-900 dark:text-stone-100 m-0">
@@ -739,7 +739,7 @@ export const GradingGuide: React.FC = () => {
             {DEFAULT_GRADING_PROFILES.map((gp) => (
               <div
                 key={gp.id}
-                className="p-3.5 rounded-xl bg-white dark:bg-stone-900 border border-stone-200 dark:border-stone-700 text-xs space-y-1.5"
+                className="p-3.5 rounded-xl bg-white dark:bg-[#121d18] border border-stone-200 dark:border-emerald-900/40 text-xs space-y-1.5"
               >
                 <div className="flex items-center justify-between">
                   <span className="font-bold text-stone-900 dark:text-stone-100">{gp.name}</span>

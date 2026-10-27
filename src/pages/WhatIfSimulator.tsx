@@ -389,7 +389,7 @@ export const WhatIfSimulator: React.FC = () => {
                   </button>
                   <button
                     onClick={() => handleAddHypothetical()}
-                    className="flex items-center gap-2 px-4 py-2 rounded-xl bg-white dark:bg-[#0c2419] hover:bg-stone-50 border border-[#e2e6de] dark:border-emerald-900/60 text-stone-800 dark:text-emerald-200 font-mono text-xs font-semibold shadow-2xs transition-all cursor-pointer"
+                    className="flex items-center gap-2 px-4 py-2 rounded-xl bg-white dark:bg-[#0c2419] hover:bg-stone-50 dark:hover:bg-[#0e2c1e] border border-[#e2e6de] dark:border-emerald-900/60 text-stone-800 dark:text-emerald-200 font-mono text-xs font-semibold shadow-2xs transition-all cursor-pointer"
                   >
                     <Plus className="w-3.5 h-3.5" />
                     <span>Add Custom What-If Task</span>
@@ -658,7 +658,7 @@ export const WhatIfSimulator: React.FC = () => {
                   {whatIfCount > 0 ? 'WHAT-IF PROJECTED GRADES' : 'ACTUAL COURSE STANDING'}
                 </span>
                 {whatIfCount > 0 && (
-                  <span className="px-2 py-0.5 rounded-full text-[10px] font-mono font-bold bg-white text-[#0d3824] shadow-2xs">
+                  <span className="px-2 py-0.5 rounded-full text-[10px] font-mono font-bold bg-white text-[#0d3824] dark:bg-emerald-950 dark:text-emerald-300 border border-transparent dark:border-emerald-700/60 shadow-2xs">
                     Hypothetical
                   </span>
                 )}

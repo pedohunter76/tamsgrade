@@ -154,13 +154,13 @@ export const RequiredScore: React.FC = () => {
             </h2>
 
             {/* Target Mode Toggle */}
-            <div className="flex items-center p-0.5 rounded-xl bg-stone-100 dark:bg-stone-850 text-xs font-mono">
+            <div className="flex items-center p-0.5 rounded-xl bg-stone-100 dark:bg-[#121c17] border border-stone-200/60 dark:border-emerald-900/60 text-xs font-mono">
               <button
                 onClick={() => setTargetMode('raw')}
                 className={`px-3 py-1 rounded-lg font-semibold transition-all ${
                   targetMode === 'raw'
-                    ? 'bg-white dark:bg-stone-700 text-[#0d3824] dark:text-emerald-300 font-bold shadow-xs'
-                    : 'text-stone-500'
+                    ? 'bg-white dark:bg-[#1a2b22] text-[#0d3824] dark:text-emerald-300 font-bold shadow-xs border border-transparent dark:border-emerald-800/60'
+                    : 'text-stone-500 hover:text-stone-800 dark:text-emerald-400/70 dark:hover:text-emerald-200'
                 }`}
               >
                 Raw Percentage (%)
@@ -169,8 +169,8 @@ export const RequiredScore: React.FC = () => {
                 onClick={() => setTargetMode('transmuted')}
                 className={`px-3 py-1 rounded-lg font-semibold transition-all ${
                   targetMode === 'transmuted'
-                    ? 'bg-white dark:bg-stone-700 text-[#0d3824] dark:text-emerald-300 font-bold shadow-xs'
-                    : 'text-stone-500'
+                    ? 'bg-white dark:bg-[#1a2b22] text-[#0d3824] dark:text-emerald-300 font-bold shadow-xs border border-transparent dark:border-emerald-800/60'
+                    : 'text-stone-500 hover:text-stone-800 dark:text-emerald-400/70 dark:hover:text-emerald-200'
                 }`}
               >
                 FEU Scale (1.00-4.00)
@@ -243,14 +243,14 @@ export const RequiredScore: React.FC = () => {
                   <button
                     type="button"
                     onClick={() => setTargetRawPercentage(64)}
-                    className="px-2.5 py-1 rounded-xl bg-stone-100 dark:bg-stone-850 hover:bg-stone-200 dark:hover:bg-stone-800 text-stone-700 dark:text-stone-300 font-semibold transition-colors"
+                    className="px-2.5 py-1 rounded-xl bg-stone-100 dark:bg-[#14231b] hover:bg-stone-200 dark:hover:bg-[#1a2f24] text-stone-700 dark:text-emerald-200 border border-stone-200 dark:border-emerald-900/60 font-semibold transition-colors"
                   >
                     64% (2.00 / C)
                   </button>
                   <button
                     type="button"
                     onClick={() => setTargetRawPercentage(50)}
-                    className="px-2.5 py-1 rounded-xl bg-stone-100 dark:bg-stone-850 hover:bg-stone-200 dark:hover:bg-stone-800 text-stone-700 dark:text-stone-300 font-semibold transition-colors"
+                    className="px-2.5 py-1 rounded-xl bg-stone-100 dark:bg-[#14231b] hover:bg-stone-200 dark:hover:bg-[#1a2f24] text-stone-700 dark:text-emerald-200 border border-stone-200 dark:border-emerald-900/60 font-semibold transition-colors"
                   >
                     50% (1.00 / D Passing)
                   </button>
