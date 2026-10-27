@@ -1,0 +1,42 @@
+{
+  "name": "TamsGrade: FEU Manila IABF Grade Tracker",
+  "short_name": "TamsGrade",
+  "description": "Zero-based grading calculator, what-if simulator, and academic performance tracker for FEU Manila IABF students.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#005a36",
+  "theme_color": "#005a36",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icon-maskable.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "/apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}
