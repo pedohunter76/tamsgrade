@@ -68,7 +68,7 @@ You can install TamsGrade directly to your iPhone home screen with a native app 
 
 ```bash
 # Clone the repository
-git clone https://github.com/<your-username>/tamsgrade.git
+git clone https://github.com/pedohunter76/tamsgrade.git
 
 # Navigate into the project directory
 cd tamsgrade
