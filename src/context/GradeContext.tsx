@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, useEffect, useMemo, useCallback } from 'react'
+import React, { createContext, useContext, useState, useEffect, useMemo, useCallback, useRef } from 'react'
 import {
   Subject,
   Assessment,
@@ -20,8 +20,16 @@ import {
   BS_ACCOUNTANCY_CURRICULUM,
   getAcademicYearForYear
 } from '../engine/curriculum'
+import { generateUniqueId } from '../utils/ids'
+import { triggerHaptic } from '../utils/haptics'
 
 export type NavTab = 'dashboard' | 'subjects' | 'curriculum' | 'calculator' | 'simulator' | 'target' | 'guide' | 'settings'
+
+export interface UndoAction {
+  id: string
+  message: string
+  undo: () => Promise<void>
+}
 
 interface GradeContextType {
   activeTermId: string
@@ -37,6 +45,10 @@ interface GradeContextType {
   selectedSubjectId: string | null
   setSelectedSubjectId: (id: string | null) => void
   isLoading: boolean
+  dbError: string | null
+  clearDbError: () => void
+  undoAction: UndoAction | null
+  dismissUndo: () => void
 
   // Grade results cache
   gradeResults: Map<string, SubjectGradeResult>
@@ -60,7 +72,7 @@ interface GradeContextType {
 
   // Preferences & System
   isDarkMode: boolean
-  toggleTheme: () => Promise<void>
+  toggleTheme: () => void
   updatePreferences: (updates: Partial<UserPreferences>) => Promise<void>
   resetAll: () => Promise<void>
   reloadSamples: () => Promise<void>
@@ -76,10 +88,64 @@ export const GradeProvider: React.FC<{ children: React.ReactNode }> = ({ childre
   const [activeTermId, setActiveTermIdState] = useState<string>('y1_s1')
   const [assessments, setAssessments] = useState<Assessment[]>([])
   const [transmutationProfiles, setTransmutationProfiles] = useState<TransmutationProfile[]>([])
-  const [preferences, setPreferences] = useState<UserPreferences>(DEFAULT_PREFERENCES)
-  const [activeTab, setActiveTab] = useState<NavTab>('dashboard')
+  const [preferences, setPreferences] = useState<UserPreferences>(() => {
+    if (typeof window !== 'undefined') {
+      const savedTheme = localStorage.getItem('tamsgrade_theme')
+      if (savedTheme === 'dark' || savedTheme === 'light') {
+        return { ...DEFAULT_PREFERENCES, theme: savedTheme }
+      }
+      if (document.documentElement.classList.contains('dark')) {
+        return { ...DEFAULT_PREFERENCES, theme: 'dark' }
+      }
+    }
+    return DEFAULT_PREFERENCES
+  })
+  const [activeTab, setActiveTab] = useState<NavTab>(() => {
+    if (typeof window !== 'undefined') {
+      const hash = window.location.hash.replace(/^#\/?/, '').toLowerCase()
+      const validTabs: NavTab[] = ['dashboard', 'subjects', 'curriculum', 'calculator', 'simulator', 'target', 'guide', 'settings']
+      if (validTabs.includes(hash as NavTab)) {
+        return hash as NavTab
+      }
+    }
+    return 'dashboard'
+  })
   const [selectedSubjectId, setSelectedSubjectId] = useState<string | null>(null)
   const [isLoading, setIsLoading] = useState<boolean>(true)
+  const [dbError, setDbError] = useState<string | null>(null)
+  const clearDbError = useCallback(() => setDbError(null), [])
+  const [undoAction, setUndoAction] = useState<UndoAction | null>(null)
+  const dismissUndo = useCallback(() => setUndoAction(null), [])
+
+  useEffect(() => {
+    if (!undoAction) return
+    const timer = setTimeout(() => {
+      setUndoAction(null)
+    }, 6000)
+    return () => clearTimeout(timer)
+  }, [undoAction])
+
+  // Sync activeTab to URL hash and handle browser back/forward
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const currentHash = window.location.hash.replace(/^#\/?/, '')
+      if (currentHash !== activeTab) {
+        window.history.replaceState(null, '', `#/${activeTab}`)
+      }
+    }
+  }, [activeTab])
+
+  useEffect(() => {
+    const handleHashChange = () => {
+      const hash = window.location.hash.replace(/^#\/?/, '').toLowerCase()
+      const validTabs: NavTab[] = ['dashboard', 'subjects', 'curriculum', 'calculator', 'simulator', 'target', 'guide', 'settings']
+      if (validTabs.includes(hash as NavTab)) {
+        setActiveTab(hash as NavTab)
+      }
+    }
+    window.addEventListener('hashchange', handleHashChange)
+    return () => window.removeEventListener('hashchange', handleHashChange)
+  }, [])
 
   // Current active term object
   const activeTerm = useMemo(() => {
@@ -117,7 +183,7 @@ export const GradeProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     }
   }, [allSubjects])
 
-  // Load from Dexie on mount
+  // Load from Dexie on mount - stable callback without selectedSubjectId in closure
   const refreshData = useCallback(async () => {
     try {
       await initializeDatabase()
@@ -129,42 +195,38 @@ export const GradeProvider: React.FC<{ children: React.ReactNode }> = ({ childre
       setAllSubjects(subs)
       setAssessments(asms)
       setTransmutationProfiles(profs)
+
+      // Theme single source of truth: localStorage + DOM
+      const savedLocalTheme = localStorage.getItem('tamsgrade_theme')
+      const activeTheme: 'light' | 'dark' = savedLocalTheme === 'dark' ? 'dark' : 'light'
+      document.documentElement.classList.toggle('dark', activeTheme === 'dark')
+
       if (prefsRecord) {
-        const savedLocalTheme = localStorage.getItem('tamsgrade_theme')
-        const activeTheme: 'light' | 'dark' = savedLocalTheme === 'dark' ? 'dark' : (savedLocalTheme === 'light' ? 'light' : 'light')
-        localStorage.setItem('tamsgrade_theme', activeTheme)
-        if (activeTheme === 'dark') {
-          document.documentElement.classList.add('dark')
-        } else {
-          document.documentElement.classList.remove('dark')
-        }
         setPreferences({ ...prefsRecord, theme: activeTheme })
         if (prefsRecord.activeTermId) {
           setActiveTermIdState(prefsRecord.activeTermId)
         }
       } else {
-        const savedLocalTheme = localStorage.getItem('tamsgrade_theme')
-        const activeTheme: 'light' | 'dark' = savedLocalTheme === 'dark' ? 'dark' : 'light'
-        localStorage.setItem('tamsgrade_theme', activeTheme)
-        if (activeTheme === 'dark') {
-          document.documentElement.classList.add('dark')
-        } else {
-          document.documentElement.classList.remove('dark')
-        }
         setPreferences(prev => ({ ...prev, theme: activeTheme }))
       }
 
       const initialTerm = prefsRecord?.activeTermId || 'y1_s1'
       const currentTermSubs = subs.filter(s => (s.termId || 'y1_s1') === initialTerm)
-      if (currentTermSubs.length > 0 && !selectedSubjectId) {
-        setSelectedSubjectId(currentTermSubs[0].id)
-      }
-    } catch (err) {
+      setSelectedSubjectId(prev => {
+        if (prev && subs.some(s => s.id === prev)) {
+          return prev
+        }
+        return currentTermSubs.length > 0 ? currentTermSubs[0].id : null
+      })
+      setDbError(null)
+    } catch (err: unknown) {
+      const errorMsg = err instanceof Error ? err.message : 'Failed to connect to local database'
       console.error('Failed to load data from IndexedDB:', err)
+      setDbError(errorMsg)
     } finally {
       setIsLoading(false)
     }
-  }, [selectedSubjectId])
+  }, [])
 
   useEffect(() => {
     refreshData()
@@ -175,40 +237,76 @@ export const GradeProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     return preferences.theme === 'dark'
   }, [preferences.theme])
 
-  // Sync theme with DOM
-  useEffect(() => {
-    if (preferences.theme === 'dark') {
-      document.documentElement.classList.add('dark')
-    } else {
-      document.documentElement.classList.remove('dark')
-    }
-  }, [preferences.theme])
-
-  // Quick 1-tap theme toggle
-  const toggleTheme = useCallback(async () => {
-    const isCurrentlyDark = document.documentElement.classList.contains('dark') || preferences.theme === 'dark'
+  // Quick 1-tap theme toggle (synchronous DOM + localStorage + state update)
+  const toggleTheme = useCallback(() => {
+    triggerHaptic('light')
+    const isCurrentlyDark = document.documentElement.classList.contains('dark')
     const nextTheme: 'light' | 'dark' = isCurrentlyDark ? 'light' : 'dark'
-    localStorage.setItem('tamsgrade_theme', nextTheme)
+
+    // 1. Immediately mutate documentElement for zero-latency visual transition
     if (nextTheme === 'dark') {
       document.documentElement.classList.add('dark')
     } else {
       document.documentElement.classList.remove('dark')
     }
-    const newPrefs = { ...preferences, theme: nextTheme }
-    await db.preferences.put({ id: 'user_preferences', ...newPrefs })
-    setPreferences(newPrefs)
-  }, [preferences])
 
-  // Compute grade results for all subjects across all terms
-  const gradeResults = useMemo(() => {
-    const map = new Map<string, SubjectGradeResult>()
-    for (const sub of allSubjects) {
-      const subAssessments = assessments.filter(a => a.subjectId === sub.id)
-      const transProfile = transmutationProfiles.find(p => p.id === sub.transmutationProfileId)
-      const result = calculateSubjectGrade(sub, subAssessments, transProfile, preferences.treatMissingAsZero)
-      map.set(sub.id, result)
+    // 2. Persist to localStorage synchronously
+    try {
+      localStorage.setItem('tamsgrade_theme', nextTheme)
+    } catch {
+      // ignore storage quota issues
     }
-    return map
+
+    // 3. Persist to IndexedDB asynchronously
+    db.preferences.update('user_preferences', { theme: nextTheme }).catch(() => {})
+
+    // 4. Update React preferences state
+    setPreferences(prev => ({ ...prev, theme: nextTheme }))
+  }, [])
+
+  // Internal cache to prevent re-calculating untouched subjects when one assessment changes
+  const gradeCacheRef = useRef<Map<string, { key: string; result: SubjectGradeResult }>>(new Map())
+
+  // Compute grade results for all subjects across all terms efficiently
+  const gradeResults = useMemo(() => {
+    // 1. Single pass O(M) bucket of assessments by subjectId
+    const asmMap = new Map<string, Assessment[]>()
+    for (const a of assessments) {
+      let list = asmMap.get(a.subjectId)
+      if (!list) {
+        list = []
+        asmMap.set(a.subjectId, list)
+      }
+      list.push(a)
+    }
+
+    const resultMap = new Map<string, SubjectGradeResult>()
+    const prevCache = gradeCacheRef.current
+    const newCache = new Map<string, { key: string; result: SubjectGradeResult }>()
+
+    for (const sub of allSubjects) {
+      const subAssessments = asmMap.get(sub.id) || []
+      const transProfile = transmutationProfiles.find(p => p.id === sub.transmutationProfileId)
+
+      // Signature key for this subject's calculation inputs
+      const asmsSignature = subAssessments
+        .map(a => `${a.id}:${a.pointsEarned ?? 'null'}:${a.totalPossiblePoints}:${a.categoryId}:${a.period || ''}`)
+        .join('|')
+      const cacheKey = `${sub.updatedAt || sub.createdAt || ''}_${sub.transmutationProfileId || ''}_${preferences.treatMissingAsZero}_${asmsSignature}`
+
+      const cachedEntry = prevCache.get(sub.id)
+      if (cachedEntry && cachedEntry.key === cacheKey) {
+        resultMap.set(sub.id, cachedEntry.result)
+        newCache.set(sub.id, cachedEntry)
+      } else {
+        const result = calculateSubjectGrade(sub, subAssessments, transProfile, preferences.treatMissingAsZero)
+        resultMap.set(sub.id, result)
+        newCache.set(sub.id, { key: cacheKey, result })
+      }
+    }
+
+    gradeCacheRef.current = newCache
+    return resultMap
   }, [allSubjects, assessments, transmutationProfiles, preferences.treatMissingAsZero])
 
   const getSubjectResult = useCallback(
@@ -218,7 +316,7 @@ export const GradeProvider: React.FC<{ children: React.ReactNode }> = ({ childre
 
   // Subject Actions
   const addSubject = async (data: Omit<Subject, 'id' | 'createdAt' | 'updatedAt'>): Promise<string> => {
-    const newId = `sub_${Date.now()}_${Math.random().toString(36).substring(2, 6)}`
+    const newId = generateUniqueId('sub')
     const now = new Date().toISOString()
     const newSubject: Subject = {
       ...data,
@@ -243,6 +341,11 @@ export const GradeProvider: React.FC<{ children: React.ReactNode }> = ({ childre
   }
 
   const deleteSubject = async (id: string): Promise<void> => {
+    const target = allSubjects.find(s => s.id === id)
+    if (!target) return
+    triggerHaptic('warning')
+    const targetAssessments = assessments.filter(a => a.subjectId === id)
+
     await db.subjects.delete(id)
     await db.assessments.where('subjectId').equals(id).delete()
     setAllSubjects(prev => prev.filter(s => s.id !== id))
@@ -251,19 +354,34 @@ export const GradeProvider: React.FC<{ children: React.ReactNode }> = ({ childre
       const remaining = allSubjects.filter(s => s.id !== id && (s.termId || 'y1_s1') === activeTermId)
       setSelectedSubjectId(remaining.length > 0 ? remaining[0].id : null)
     }
+
+    setUndoAction({
+      id: generateUniqueId('undo'),
+      message: `Deleted subject "${target.code}".`,
+      undo: async () => {
+        await db.subjects.add(target)
+        if (targetAssessments.length > 0) {
+          await db.assessments.bulkAdd(targetAssessments)
+        }
+        setAllSubjects(prev => [...prev, target])
+        setAssessments(prev => [...prev, ...targetAssessments])
+        setSelectedSubjectId(target.id)
+        setUndoAction(null)
+      }
+    })
   }
 
   const duplicateSubject = async (id: string): Promise<string> => {
     const target = allSubjects.find(s => s.id === id)
     if (!target) throw new Error('Subject not found')
 
-    const newId = `sub_${Date.now()}_${Math.random().toString(36).substring(2, 6)}`
+    const newId = generateUniqueId('sub')
     const now = new Date().toISOString()
 
     // Map old category ids to new category ids
     const catIdMap = new Map<string, string>()
     const duplicatedCategories = target.categories.map(c => {
-      const newCatId = `cat_${Date.now()}_${Math.random().toString(36).substring(2, 6)}`
+      const newCatId = generateUniqueId('cat')
       catIdMap.set(c.id, newCatId)
       return { ...c, id: newCatId }
     })
@@ -282,7 +400,7 @@ export const GradeProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     const targetAssessments = assessments.filter(a => a.subjectId === id)
     const duplicatedAssessments: Assessment[] = targetAssessments.map(a => ({
       ...a,
-      id: `asm_${Date.now()}_${Math.random().toString(36).substring(2, 6)}`,
+      id: generateUniqueId('asm'),
       subjectId: newId,
       categoryId: catIdMap.get(a.categoryId) || a.categoryId
     }))
@@ -304,9 +422,10 @@ export const GradeProvider: React.FC<{ children: React.ReactNode }> = ({ childre
 
   // Assessment Actions
   const addAssessment = async (data: Omit<Assessment, 'id'>): Promise<string> => {
-    const newId = `asm_${Date.now()}_${Math.random().toString(36).substring(2, 6)}`
+    const newId = generateUniqueId('asm')
     const newAssessment: Assessment = { ...data, id: newId }
     await db.assessments.add(newAssessment)
+    triggerHaptic('success')
     setAssessments(prev => [...prev, newAssessment])
     return newId
   }
@@ -317,15 +436,29 @@ export const GradeProvider: React.FC<{ children: React.ReactNode }> = ({ childre
   }
 
   const deleteAssessment = async (id: string): Promise<void> => {
+    const target = assessments.find(a => a.id === id)
+    if (!target) return
+    triggerHaptic('warning')
+
     await db.assessments.delete(id)
     setAssessments(prev => prev.filter(a => a.id !== id))
+
+    setUndoAction({
+      id: generateUniqueId('undo'),
+      message: `Deleted assessment "${target.name}".`,
+      undo: async () => {
+        await db.assessments.add(target)
+        setAssessments(prev => [...prev, target])
+        setUndoAction(null)
+      }
+    })
   }
 
   // Profile Actions
   const addTransmutationProfile = async (
     data: Omit<TransmutationProfile, 'id'>
   ): Promise<string> => {
-    const newId = `prof_${Date.now()}_${Math.random().toString(36).substring(2, 6)}`
+    const newId = generateUniqueId('prof')
     const newProfile: TransmutationProfile = { ...data, id: newId }
     await db.transmutationProfiles.add(newProfile)
     setTransmutationProfiles(prev => [...prev, newProfile])
@@ -343,11 +476,16 @@ export const GradeProvider: React.FC<{ children: React.ReactNode }> = ({ childre
   // Preferences & System
   const updatePreferences = async (updates: Partial<UserPreferences>): Promise<void> => {
     if (updates.theme) {
-      localStorage.setItem('tamsgrade_theme', updates.theme)
       if (updates.theme === 'dark') {
         document.documentElement.classList.add('dark')
-      } else {
+        localStorage.setItem('tamsgrade_theme', 'dark')
+      } else if (updates.theme === 'light') {
         document.documentElement.classList.remove('dark')
+        localStorage.setItem('tamsgrade_theme', 'light')
+      } else if (updates.theme === 'system') {
+        const prefersDark = typeof window !== 'undefined' && window.matchMedia('(prefers-color-scheme: dark)').matches
+        document.documentElement.classList.toggle('dark', prefersDark)
+        localStorage.setItem('tamsgrade_theme', 'system')
       }
     }
     const newPrefs = { ...preferences, ...updates }
@@ -376,7 +514,10 @@ export const GradeProvider: React.FC<{ children: React.ReactNode }> = ({ childre
       subjects: allSubjects,
       assessments,
       transmutationProfiles,
-      preferences
+      preferences: {
+        ...preferences,
+        activeTermId
+      }
     }
   }
 
@@ -408,6 +549,9 @@ export const GradeProvider: React.FC<{ children: React.ReactNode }> = ({ childre
         }
         if (sanitizedData.preferences) {
           await db.preferences.put({ id: 'user_preferences', ...sanitizedData.preferences })
+          if (sanitizedData.preferences.activeTermId) {
+            setActiveTermIdState(sanitizedData.preferences.activeTermId)
+          }
         }
       })
 
@@ -439,6 +583,10 @@ export const GradeProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     selectedSubjectId,
     setSelectedSubjectId,
     isLoading,
+    dbError,
+    clearDbError,
+    undoAction,
+    dismissUndo,
     gradeResults,
     getSubjectResult,
     addSubject,

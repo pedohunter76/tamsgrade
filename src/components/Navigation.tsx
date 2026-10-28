@@ -18,6 +18,7 @@ import {
   Moon
 } from 'lucide-react'
 import { useGrade, NavTab } from '../context/GradeContext'
+import { triggerHaptic } from '../utils/haptics'
 
 interface NavItem {
   id: NavTab
@@ -75,7 +76,10 @@ export const Navigation: React.FC<{ onOpenAddSubject: () => void }> = ({ onOpenA
               return (
                 <button
                   key={item.id}
-                  onClick={() => setActiveTab(item.id)}
+                  onClick={() => {
+                    triggerHaptic('light')
+                    setActiveTab(item.id)
+                  }}
                   className={`w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs font-semibold transition-all text-left group active-press ${
                     isActive
                       ? 'bg-[#0f3d28] dark:bg-[#154d33] text-white shadow-xs'
@@ -95,6 +99,32 @@ export const Navigation: React.FC<{ onOpenAddSubject: () => void }> = ({ onOpenA
             })}
           </nav>
         </div>
+
+        {/* Desktop Sidebar Footer: Quick Theme Toggle */}
+        <div className="p-3 border-t border-[#e3e6de] dark:border-stone-800/80">
+          <button
+            type="button"
+            id="theme-toggle-btn-sidebar"
+            onClick={(e) => {
+              e.preventDefault()
+              e.stopPropagation()
+              toggleTheme()
+            }}
+            className="w-full flex items-center justify-between px-3 py-2 rounded-xl border border-[#e2e6de] dark:border-stone-700/60 bg-[#fafbfa] dark:bg-[#18201d] text-stone-700 dark:text-stone-200 hover:bg-stone-100 dark:hover:bg-[#202b25] transition-all cursor-pointer active-press shadow-2xs"
+            title={isDarkMode ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
+            aria-label={isDarkMode ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
+          >
+            <div className="flex items-center gap-2.5">
+              <div className="w-6 h-6 rounded-md flex items-center justify-center bg-stone-100 dark:bg-stone-800 text-stone-600 dark:text-amber-400">
+                {isDarkMode ? <Sun className="w-3.5 h-3.5 text-amber-400" /> : <Moon className="w-3.5 h-3.5 text-stone-600" />}
+              </div>
+              <span className="text-xs font-semibold">{isDarkMode ? 'Dark Mode' : 'Light Mode'}</span>
+            </div>
+            <span className="text-[10px] font-mono font-bold px-1.5 py-0.5 rounded bg-stone-200/70 dark:bg-stone-800 text-stone-600 dark:text-stone-300">
+              {isDarkMode ? 'Dark' : 'Light'}
+            </span>
+          </button>
+        </div>
       </aside>
 
       {/* Mobile Bottom Navigation Bar with Safe Area Support */}
@@ -109,6 +139,7 @@ export const Navigation: React.FC<{ onOpenAddSubject: () => void }> = ({ onOpenA
               <button
                 key={item.id}
                 onClick={() => {
+                  triggerHaptic('light')
                   setActiveTab(item.id)
                   setIsMoreDrawerOpen(false)
                 }}
@@ -219,12 +250,18 @@ export const Navigation: React.FC<{ onOpenAddSubject: () => void }> = ({ onOpenA
             {/* Theme Mode Toggle in Drawer */}
             <div className="pt-2 border-t border-stone-100 dark:border-stone-800 space-y-2">
               <button
-                onClick={() => toggleTheme()}
+                type="button"
+                id="theme-toggle-btn-drawer"
+                onClick={(e) => {
+                  e.preventDefault()
+                  e.stopPropagation()
+                  toggleTheme()
+                }}
                 className="w-full flex items-center justify-between p-3 rounded-xl bg-[#fafbfa] dark:bg-[#18201d] border border-[#e8ece4] dark:border-stone-700/60 text-stone-800 dark:text-stone-100 hover:bg-stone-100 dark:hover:bg-[#223028] transition-all cursor-pointer active-press"
               >
                 <div className="flex items-center gap-3">
                   <div className="w-9 h-9 rounded-lg flex items-center justify-center shrink-0 bg-amber-50 dark:bg-amber-950/70 text-amber-600 dark:text-amber-400">
-                    {isDarkMode ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
+                    {isDarkMode ? <Sun className="w-4 h-4 text-amber-400" /> : <Moon className="w-4 h-4 text-stone-600" />}
                   </div>
                   <div>
                     <span className="block font-bold text-xs">{isDarkMode ? 'Theme: Dark Mode' : 'Theme: Light Mode'}</span>

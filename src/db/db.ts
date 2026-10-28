@@ -3,11 +3,17 @@ import { Subject, Assessment, AssessmentCategory, TransmutationProfile, UserPref
 import { DEFAULT_TRANSMUTATION_PROFILES } from '../engine/profiles'
 import { getAllCurriculumSubjects } from '../engine/curriculum'
 
+export interface MigrationRecord {
+  id: string
+  executedAt: string
+}
+
 export class TamsGradeDatabase extends Dexie {
   subjects!: Table<Subject, string>
   assessments!: Table<Assessment, string>
   transmutationProfiles!: Table<TransmutationProfile, string>
   preferences!: Table<UserPreferences & { id: string }, string>
+  migrations!: Table<MigrationRecord, string>
 
   constructor() {
     super('TamsGradeDB')
@@ -16,6 +22,16 @@ export class TamsGradeDatabase extends Dexie {
       assessments: 'id, subjectId, categoryId, date',
       transmutationProfiles: 'id, institution, program',
       preferences: 'id'
+    })
+
+    this.version(2).stores({
+      subjects: 'id, code, category, isArchived, academicYear, semester, termId',
+      assessments: 'id, subjectId, categoryId, date',
+      transmutationProfiles: 'id, institution, program',
+      preferences: 'id',
+      migrations: 'id'
+    }).upgrade(() => {
+      // Schema evolution hook for version 2 migrations
     })
   }
 }
@@ -541,22 +557,23 @@ export async function initializeDatabase(): Promise<void> {
   }
 
   // Check if all curriculum terms (76 subjects) have been seeded into IndexedDB
-  const cleanSlateAllTerms = await db.preferences.get('clean_slate_all_terms_v7')
+  const cleanSlateMigration = await db.migrations.get('clean_slate_all_terms_v7')
+  const legacyCleanSlate = await db.preferences.get('clean_slate_all_terms_v7')
   const count = await db.subjects.count()
 
-  if (!cleanSlateAllTerms || count < 70) {
+  if ((!cleanSlateMigration && !legacyCleanSlate) || count < 70) {
     // Put all curriculum subjects into IndexedDB, preserving any assessments entered by student
     await db.subjects.bulkPut(ALL_CURRICULUM_SUBJECTS)
-    await db.preferences.put({
+    await db.migrations.put({
       id: 'clean_slate_all_terms_v7',
-      defaultAcademicYear: '2026-2027',
-      defaultSemester: '1st Semester'
-    } as any)
+      executedAt: new Date().toISOString()
+    })
   }
 
   // One-time cleanup for Block 109/110 and theme fix
-  const themeAndBlockCleanup = await db.preferences.get('theme_and_block_cleanup_v9')
-  if (!themeAndBlockCleanup) {
+  const themeAndBlockCleanup = await db.migrations.get('theme_and_block_cleanup_v9')
+  const legacyCleanup = await db.preferences.get('theme_and_block_cleanup_v9')
+  if (!themeAndBlockCleanup && !legacyCleanup) {
     const allExistingSubjects = await db.subjects.toArray()
     const subjectsToUpdate = allExistingSubjects.map(s => {
       if (s.section && (s.section.includes('109') || s.section.includes('Block'))) {
@@ -573,11 +590,10 @@ export async function initializeDatabase(): Promise<void> {
       await db.preferences.update('user_preferences', { theme: finalTheme })
     }
 
-    await db.preferences.put({
+    await db.migrations.put({
       id: 'theme_and_block_cleanup_v9',
-      defaultAcademicYear: '2026-2027',
-      defaultSemester: '1st Semester'
-    } as any)
+      executedAt: new Date().toISOString()
+    })
   }
 }
 

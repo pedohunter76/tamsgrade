@@ -369,8 +369,8 @@ export function calculateSubjectGrade(
       }
     } else {
       // Cumulative 100%
-      finalCourseRaw = completedWeightCoverage >= 100 ? unnormalizedRawGrade : normalizedProvisionalGrade
-      isProjected = completedWeightCoverage < 100
+      finalCourseRaw = (completedWeightCoverage >= 100 || treatMissingAsZero) ? unnormalizedRawGrade : normalizedProvisionalGrade
+      isProjected = completedWeightCoverage < 100 && !treatMissingAsZero
     }
 
     let fLetter: string | undefined

@@ -542,7 +542,7 @@ describe('TamsGrade Calculation Engine Test Suite', () => {
     const result = calculateSubjectGrade(subject, assessments, DEFAULT_TRANSMUTATION_PROFILES[0])
     // 90*0.60 + 85*0.40 = 54 + 34 = 88%
     expect(result.unnormalizedRawGrade).toBe(88)
-    expect(result.transmutedGrade).toBe('1.50') // 88% maps to 1.50
+    expect(result.transmutedGrade).toBe('3.50') // 88% maps to 3.50 in FEU IABF 4.0 scale
     expect(result.transmutationStatus).toBe('verified')
   })
 })

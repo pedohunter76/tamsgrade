@@ -133,3 +133,28 @@
 ::-webkit-scrollbar-thumb:hover {
   background: rgba(120, 113, 108, 0.45);
 }
+
+/* Ensure inputs meet minimum 16px to prevent iOS auto-zoom */
+@layer base {
+  input, select, textarea {
+    font-size: max(16px, 1rem);
+  }
+}
+
+/* Animated smooth page transitions */
+.page-transition {
+  animation: pageFadeIn 0.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes pageFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+

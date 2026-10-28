@@ -1,5 +1,8 @@
 import { Assessment, Subject, TransmutationProfile, SimulationChange, SimulationResult } from './types'
 import { calculateSubjectGrade } from './calculator'
+import { generateUniqueId } from '../utils/ids'
+
+export type { SimulationResult } from './types'
 
 /**
  * Simulates what-if grade scenarios without mutating original assessment records
@@ -36,7 +39,7 @@ export function simulateGradeChanges(
       }
     } else {
       // Add hypothetical assessment
-      const hypotheticalId = change.tempId || `hypo_${Date.now()}_${Math.random().toString(36).substring(2, 7)}`
+      const hypotheticalId = change.tempId || generateUniqueId('hypo')
       clonedAssessments.push({
         id: hypotheticalId,
         subjectId: subject.id,

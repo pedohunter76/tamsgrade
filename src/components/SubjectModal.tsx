@@ -1,7 +1,9 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
+import { createPortal } from 'react-dom'
 import { X, Plus, Trash2, AlertCircle, CheckCircle2, HelpCircle, Check, BookOpen, Layers } from 'lucide-react'
 import { Subject, SubjectCategory, AssessmentCategory, PeriodCombinationFormula } from '../engine/types'
 import { DEFAULT_GRADING_PROFILES, DEFAULT_TRANSMUTATION_PROFILES } from '../engine/profiles'
+import { generateUniqueId } from '../utils/ids'
 
 interface SubjectModalProps {
   isOpen: boolean
@@ -62,9 +64,9 @@ export const SubjectModal: React.FC<SubjectModalProps> = ({
       } else if (profile.category === 'gen_ed') {
         setTransmutationProfileId('feu_standard_undergraduate')
       }
-      const mappedCategories: AssessmentCategory[] = profile.defaultCategories.map((dc, idx) => ({
+      const mappedCategories: AssessmentCategory[] = profile.defaultCategories.map((dc) => ({
         ...dc,
-        id: `cat_${Date.now()}_${idx}`
+        id: generateUniqueId('cat')
       }))
       setCategories(mappedCategories)
     }
@@ -77,7 +79,7 @@ export const SubjectModal: React.FC<SubjectModalProps> = ({
   // Category handlers
   const handleAddCategory = () => {
     const newCat: AssessmentCategory = {
-      id: `cat_${Date.now()}_${Math.random().toString(36).substring(2, 6)}`,
+      id: generateUniqueId('cat'),
       name: 'New Assessment Category',
       weight: 10,
       calculationMethod: 'total_points',
@@ -146,11 +148,38 @@ export const SubjectModal: React.FC<SubjectModalProps> = ({
     }
   }
 
-  if (!isOpen) return null
+  // Close on Escape key & Lock background scroll while modal is open
+  useEffect(() => {
+    if (!isOpen) return
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        onClose()
+      }
+    }
+    window.addEventListener('keydown', handleKeyDown)
+    const originalOverflow = document.body.style.overflow
+    document.body.style.overflow = 'hidden'
 
-  return (
-    <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-0 sm:p-4 bg-stone-900/60 dark:bg-black/70 backdrop-blur-xs overflow-y-auto animate-in fade-in duration-150">
-      <div className="relative w-full max-w-2xl bg-white dark:bg-[#071610] rounded-t-3xl sm:rounded-2xl shadow-2xl border-t sm:border border-[#e3e6de] dark:border-emerald-950/60 overflow-hidden flex flex-col max-h-[94vh] sm:max-h-[92vh] animate-in slide-in-from-bottom-4 sm:slide-in-from-bottom-0 duration-200">
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown)
+      document.body.style.overflow = originalOverflow
+    }
+  }, [isOpen, onClose])
+
+  if (!isOpen || typeof document === 'undefined') return null
+
+  return createPortal(
+    <div
+      className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-stone-950/75 dark:bg-black/80 backdrop-blur-xs overflow-y-auto animate-in fade-in duration-150"
+      onClick={(e) => {
+        if (e.target === e.currentTarget) onClose()
+      }}
+    >
+      <div
+        role="dialog"
+        aria-modal="true"
+        className="relative w-full max-w-2xl bg-white dark:bg-[#071610] rounded-2xl shadow-2xl border border-[#e3e6de] dark:border-emerald-950/60 overflow-hidden my-auto flex flex-col max-h-[90vh] animate-in zoom-in-95 duration-150"
+      >
         {/* Mobile Drag Grabber Handle */}
         <div className="sm:hidden pt-2.5 pb-1 flex justify-center bg-[#fafbfa] dark:bg-[#091e14] border-b border-transparent">
           <div className="w-10 h-1 rounded-full bg-stone-300 dark:bg-emerald-900/60" />
@@ -442,6 +471,7 @@ export const SubjectModal: React.FC<SubjectModalProps> = ({
           </div>
         </form>
       </div>
-    </div>
+    </div>,
+    document.body
   )
 }

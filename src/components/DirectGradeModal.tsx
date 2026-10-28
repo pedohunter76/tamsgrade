@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import { createPortal } from 'react-dom'
 import {
   X,
   Award,
@@ -174,9 +175,38 @@ export const DirectGradeModal: React.FC<DirectGradeModalProps> = ({
     ? !!(subject.isDirectMidtermActive && subject.directMidtermLetterGrade)
     : !!(subject.isDirectFinalActive && subject.directFinalLetterGrade)
 
-  return (
-    <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-0 sm:p-4 bg-stone-900/60 dark:bg-black/75 backdrop-blur-xs animate-in fade-in duration-150">
-      <div className="bg-white dark:bg-[#071610] rounded-t-3xl sm:rounded-2xl max-w-xl w-full border-t sm:border border-[#e3e6de] dark:border-emerald-950/70 shadow-2xl overflow-hidden flex flex-col max-h-[92vh] max-sm:max-h-[94vh] animate-in slide-in-from-bottom sm:slide-in-from-bottom-2 duration-200">
+  // Close on Escape key & Lock background scroll while modal is open
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        onClose()
+      }
+    }
+    window.addEventListener('keydown', handleKeyDown)
+    const originalOverflow = document.body.style.overflow
+    document.body.style.overflow = 'hidden'
+
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown)
+      document.body.style.overflow = originalOverflow
+    }
+  }, [onClose])
+
+  if (typeof document === 'undefined') return null
+
+  return createPortal(
+    <div
+      className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-stone-950/75 dark:bg-black/80 backdrop-blur-xs overflow-y-auto animate-in fade-in duration-150"
+      onClick={(e) => {
+        if (e.target === e.currentTarget) onClose()
+      }}
+    >
+      <div
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="direct-grade-modal-title"
+        className="relative w-full max-w-xl bg-white dark:bg-[#071610] rounded-2xl shadow-2xl border border-[#e3e6de] dark:border-emerald-950/70 overflow-hidden flex flex-col max-h-[90vh] my-auto animate-in zoom-in-95 duration-150"
+      >
         {/* Mobile Drag Grabber */}
         <div className="sm:hidden w-12 h-1.5 rounded-full bg-stone-300 dark:bg-emerald-900/80 mx-auto my-2.5 shrink-0" />
 
@@ -196,7 +226,7 @@ export const DirectGradeModal: React.FC<DirectGradeModalProps> = ({
                   Direct Professor Grade
                 </span>
               </div>
-              <h2 className="text-lg sm:text-xl font-serif font-bold text-stone-900 dark:text-emerald-50 mt-0.5">
+              <h2 id="direct-grade-modal-title" className="text-lg sm:text-xl font-serif font-bold text-stone-900 dark:text-emerald-50 mt-0.5">
                 Input Professor-Given Grade
               </h2>
             </div>
@@ -432,7 +462,8 @@ export const DirectGradeModal: React.FC<DirectGradeModalProps> = ({
           </div>
         </form>
       </div>
-    </div>
+    </div>,
+    document.body
   )
 }
 export default DirectGradeModal

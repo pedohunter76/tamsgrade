@@ -141,13 +141,18 @@ export const HeaderBar: React.FC<HeaderBarProps> = ({ activeTab, setActiveTab, o
 
           {/* Theme Toggle Button */}
           <button
+            type="button"
             id="theme-toggle-btn"
-            onClick={toggleTheme}
+            onClick={(e) => {
+              e.preventDefault()
+              e.stopPropagation()
+              toggleTheme()
+            }}
             title={isDarkMode ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
             aria-label={isDarkMode ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
-            className="w-8 h-8 rounded-lg border border-[#e2e6de] dark:border-stone-700/60 bg-[#fafbfa] dark:bg-[#18201d] text-stone-600 dark:text-amber-400 hover:text-stone-900 dark:hover:text-amber-300 flex items-center justify-center transition-all shadow-2xs active-press cursor-pointer"
+            className="w-9 h-9 rounded-lg border border-[#e2e6de] dark:border-stone-700/60 bg-[#fafbfa] dark:bg-[#18201d] text-stone-600 dark:text-amber-400 hover:text-stone-900 dark:hover:text-amber-300 hover:border-stone-400 dark:hover:border-amber-400/50 flex items-center justify-center transition-all shadow-2xs active-press cursor-pointer shrink-0"
           >
-            {isDarkMode ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
+            {isDarkMode ? <Sun className="w-4 h-4 text-amber-400" /> : <Moon className="w-4 h-4 text-stone-600" />}
           </button>
 
           {/* Tamaraw Account Pill */}
@@ -204,13 +209,18 @@ export const HeaderBar: React.FC<HeaderBarProps> = ({ activeTab, setActiveTab, o
         {/* Right: Theme Toggle, Search & IABF Avatar badge */}
         <div className="flex items-center gap-1.5 shrink-0">
           <button
+            type="button"
             id="theme-toggle-btn-mobile"
-            onClick={toggleTheme}
-            className="w-8 h-8 rounded-lg border border-[#e2e6de] dark:border-stone-700/60 bg-[#fafbfa] dark:bg-[#18201d] flex items-center justify-center text-stone-600 dark:text-amber-400 active-press cursor-pointer"
+            onClick={(e) => {
+              e.preventDefault()
+              e.stopPropagation()
+              toggleTheme()
+            }}
+            className="w-9 h-9 min-w-[36px] min-h-[36px] rounded-lg border border-[#e2e6de] dark:border-stone-700/60 bg-[#fafbfa] dark:bg-[#18201d] flex items-center justify-center text-stone-600 dark:text-amber-400 hover:border-stone-400 dark:hover:border-amber-400/50 active-press cursor-pointer"
             title={isDarkMode ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
             aria-label={isDarkMode ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
           >
-            {isDarkMode ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
+            {isDarkMode ? <Sun className="w-4 h-4 text-amber-400" /> : <Moon className="w-4 h-4 text-stone-600" />}
           </button>
 
           <button

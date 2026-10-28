@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useMemo } from 'react'
+import { createPortal } from 'react-dom'
 import {
   X,
   AlertCircle,
@@ -248,11 +249,38 @@ export const AssessmentModal: React.FC<AssessmentModalProps> = ({
     }
   }
 
-  if (!isOpen) return null
+  // Close on Escape key & Lock background scroll while modal is open
+  useEffect(() => {
+    if (!isOpen) return
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        onClose()
+      }
+    }
+    window.addEventListener('keydown', handleKeyDown)
+    const originalOverflow = document.body.style.overflow
+    document.body.style.overflow = 'hidden'
 
-  return (
-    <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-0 sm:p-4 bg-stone-900/60 dark:bg-black/70 backdrop-blur-xs overflow-y-auto animate-in fade-in duration-150">
-      <div className="relative w-full sm:max-w-xl bg-white dark:bg-[#071610] rounded-t-3xl sm:rounded-2xl shadow-2xl border-t sm:border border-[#e3e6de] dark:border-emerald-950/60 overflow-hidden my-0 sm:my-6 flex flex-col max-h-[92vh] max-sm:max-h-[94vh] animate-in slide-in-from-bottom sm:slide-in-from-bottom-2 duration-200">
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown)
+      document.body.style.overflow = originalOverflow
+    }
+  }, [isOpen, onClose])
+
+  if (!isOpen || typeof document === 'undefined') return null
+
+  return createPortal(
+    <div
+      className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-stone-950/75 dark:bg-black/80 backdrop-blur-xs overflow-y-auto animate-in fade-in duration-150"
+      onClick={(e) => {
+        if (e.target === e.currentTarget) onClose()
+      }}
+    >
+      <div
+        role="dialog"
+        aria-modal="true"
+        className="relative w-full sm:max-w-xl bg-white dark:bg-[#071610] rounded-2xl shadow-2xl border border-[#e3e6de] dark:border-emerald-950/60 overflow-hidden my-auto flex flex-col max-h-[90vh] animate-in zoom-in-95 duration-150"
+      >
         {/* Mobile Drag Grabber */}
         <div className="sm:hidden w-12 h-1.5 rounded-full bg-stone-300 dark:bg-emerald-900/80 mx-auto my-2.5 shrink-0" />
 
@@ -726,6 +754,7 @@ export const AssessmentModal: React.FC<AssessmentModalProps> = ({
           </div>
         </form>
       </div>
-    </div>
+    </div>,
+    document.body
   )
 }

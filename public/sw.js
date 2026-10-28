@@ -1,5 +1,5 @@
 // TamsGrade Service Worker for Offline PWA Support
-const CACHE_NAME = 'tamsgrade-v1'
+const CACHE_NAME = 'tamsgrade-v2'
 
 const PRECACHE_ASSETS = [
   '/',
@@ -16,6 +16,12 @@ self.addEventListener('install', (event) => {
       return cache.addAll(PRECACHE_ASSETS)
     }).then(() => self.skipWaiting())
   )
+})
+
+self.addEventListener('message', (event) => {
+  if (event.data && event.data.type === 'SKIP_WAITING') {
+    self.skipWaiting()
+  }
 })
 
 self.addEventListener('activate', (event) => {
